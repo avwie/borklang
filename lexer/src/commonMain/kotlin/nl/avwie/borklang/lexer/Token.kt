@@ -27,11 +27,10 @@ sealed interface Token {
     }
 
     sealed interface Literal : Token {
-        data class Identifier(val value: kotlin.String) : Literal
-        data class Number(val value: kotlin.Number) : Literal
+        data class Integer(val value: kotlin.Int) : Literal
+        data class Float(val value: kotlin.Double) : Literal
         data class String(val value: kotlin.String) : Literal
         data class Boolean(val value: kotlin.Boolean) : Literal
-        data class Comment(val value: kotlin.String) : Literal
     }
 
     sealed interface Keyword : Token {
@@ -40,5 +39,11 @@ sealed interface Token {
         data object Var : Keyword
         data object Const : Keyword
     }
+
+    data class Identifier(val value: String) : Literal
+
+    data class Comment(val value: String) : Literal
+
+    data object EOF : Token
 
 }

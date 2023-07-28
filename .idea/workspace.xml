@@ -5,36 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7502dd-7526-4dfe-bc41-35da21010636" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/common_js_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/common_jvm_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/compiler_js_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/compiler_jvm_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/lexer_js_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/lexer_jvm_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/parser_js_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/parser_jvm_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/vm_js_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/vm_jvm_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/compiler/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Lexer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Scanner.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Token.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lexer/src/commonTest/kotlin/nl/avwie/borklang/lexer/LexerImplTests.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vm/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Lexer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Lexer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Token.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Token.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/src/commonTest/kotlin/nl/avwie/borklang/lexer/LexerImplTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/src/commonTest/kotlin/nl/avwie/borklang/lexer/LexerImplTests.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +106,7 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="LexerImplTests.empty" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="LexerImplTests.comments" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/lexer" />
@@ -145,7 +119,7 @@
           <list>
             <option value=":lexer:cleanJvmTest" />
             <option value=":lexer:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.lexer.LexerImplTests.empty&quot;" />
+            <option value="--tests &quot;nl.avwie.borklang.lexer.LexerImplTests.comments&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -204,6 +178,30 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="LexerImplTests.whiteSpace" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/lexer" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":lexer:cleanJvmTest" />
+            <option value=":lexer:jvmTest" />
+            <option value="--tests &quot;nl.avwie.borklang.lexer.LexerImplTests.whiteSpace&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="bork" />
       <method v="2">
@@ -220,10 +218,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.LexerImplTests" />
-        <item itemvalue="Gradle.LexerImplTests.operators" />
-        <item itemvalue="Gradle.LexerImplTests.operators2" />
-        <item itemvalue="Gradle.LexerImplTests.operators2" />
-        <item itemvalue="Gradle.LexerImplTests.operators2" />
+        <item itemvalue="Gradle.LexerImplTests.comments" />
+        <item itemvalue="Gradle.LexerImplTests" />
+        <item itemvalue="Gradle.LexerImplTests" />
+        <item itemvalue="Gradle.LexerImplTests.whiteSpace" />
       </list>
     </recent_temporary>
   </component>
@@ -237,7 +235,7 @@
       <updated>1690464850662</updated>
       <workItem from="1690464852183" duration="1147000" />
       <workItem from="1690466023692" duration="3240000" />
-      <workItem from="1690470892322" duration="2387000" />
+      <workItem from="1690470892322" duration="3289000" />
     </task>
     <servers />
   </component>

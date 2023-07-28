@@ -18,11 +18,12 @@ internal class LexerImpl(
 ) : Lexer {
     override fun getTokens(): Sequence<Token> = sequence {
         while (!scanner.isEof()) {
-            yield(nextToken())
+            nextToken()?.also { yield(it) }
         }
+        yield(Token.EOF)
     }
 
-    private fun nextToken(): Token = when (val c = scanner.scan()) {
+    private fun nextToken(): Token? = when (val c = scanner.scan()) {
         '[' -> Token.Bracket.Open
         ']' -> Token.Bracket.Close
 
@@ -86,7 +87,15 @@ internal class LexerImpl(
             while (!scanner.isEof() && scanner.peek() in '0'..'9') {
                 number.append(scanner.scan())
             }
-            Token.Literal.Number(number.toString().toInt())
+            if (scanner.peek() == '.') {
+                number.append(scanner.scan())
+                while (!scanner.isEof() && scanner.peek() in '0'..'9') {
+                    number.append(scanner.scan())
+                }
+                Token.Literal.Float(number.toString().toDouble())
+            } else {
+                Token.Literal.Integer(number.toString().toInt())
+            }
         }
 
         in 'a'..'z', in 'A'..'Z', '_' -> {
@@ -100,7 +109,9 @@ internal class LexerImpl(
                 "def" -> Token.Keyword.Def
                 "var" -> Token.Keyword.Var
                 "const" -> Token.Keyword.Const
-                else -> Token.Literal.Identifier(identifier.toString())
+                "true" -> Token.Literal.Boolean(true)
+                "false" -> Token.Literal.Boolean(false)
+                else -> Token.Identifier(identifier.toString())
             }
         }
 
@@ -121,10 +132,13 @@ internal class LexerImpl(
             while (!scanner.isEof() && scanner.peek() != '\n') {
                 comment.append(scanner.scan())
             }
-            Token.Literal.Comment(comment.toString())
+            Token.Comment(comment.toString())
         }
 
-        in " \t\r\n" -> nextToken()
+        in " \t\r\n" -> when (scanner.peek()) {
+            null -> null
+            else -> nextToken()
+        }
 
         else -> unexpectedCharacter(c)
     }
