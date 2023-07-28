@@ -27,6 +27,7 @@ internal class ParserImpl(
 
     private fun expression(): Expression = when (peek()) {
         is Token.Literal -> literal()
+        is Token.Identifier -> identifier()
         is Token.Bracket.Open -> list()
         else -> throw IllegalStateException("Expected expression, but found ${peek()}")
     }
@@ -34,6 +35,11 @@ internal class ParserImpl(
     private fun literal(): Expression.Literal = when (peek()) {
         is Token.Literal -> Expression.Literal(require())
         else -> throw IllegalStateException("Expected literal, but found ${peek()}")
+    }
+
+    private fun identifier(): Expression.Identifier = when (peek()) {
+        is Token.Identifier -> Expression.Identifier(require())
+        else -> throw IllegalStateException("Expected identifier, but found ${peek()}")
     }
 
     private fun list(): Expression {
@@ -46,7 +52,7 @@ internal class ParserImpl(
             when (peek()) {
                 is Token.Keyword -> expressions.add(keyword())
                 is Token.Operator -> expressions.add(operator())
-                is Token.Literal.Identifier -> expressions.add(call())
+                is Token.Identifier -> expressions.add(call())
                 else -> expressions.add(expression())
             }
         }
@@ -87,7 +93,7 @@ internal class ParserImpl(
         val keyword = require<Token.Keyword>()
         return when(keyword) {
             is Token.Keyword.Const -> constant()
-            is Token.Keyword.Def -> function()
+            is Token.Keyword.Fn -> function()
             is Token.Keyword.If -> conditional()
             is Token.Keyword.While -> loop()
             is Token.Keyword.Var -> variable()
@@ -96,17 +102,17 @@ internal class ParserImpl(
     }
 
     private fun constant(): Expression.Declaration.Constant {
-        val name = require<Token.Literal.Identifier>()
+        val name = require<Token.Identifier>()
         val value = literal()
         return Expression.Declaration.Constant(name.value, value)
     }
 
     private fun function(): Expression.Declaration.Function {
-        val name = require<Token.Literal.Identifier>()
+        val name = require<Token.Identifier>()
         require<Token.Bracket.Open>()
-        val parameters = mutableListOf<String>()
+        val parameters = mutableListOf<Token.Identifier>()
         while (peek() !is Token.Bracket.Close) {
-            parameters.add(require<Token.Literal.Identifier>().value)
+            parameters.add(Expression.Identifier(require<Token.Identifier>()).identifier)
         }
         require<Token.Bracket.Close>()
         val body = expression()
@@ -134,21 +140,21 @@ internal class ParserImpl(
     }
 
     private fun variable(): Expression.Declaration.Variable {
-        val name = require<Token.Literal.Identifier>()
+        val name = require<Token.Identifier>()
         val value = expression()
         if (value !is Expression.Simple) throw IllegalStateException("Variable requires a simple expression")
         return Expression.Declaration.Variable(name.value, value)
     }
 
     private fun assignment(): Expression.Assignment {
-        val name = require<Token.Literal.Identifier>()
+        val name = require<Token.Identifier>()
         val value = expression()
         if (value !is Expression.Simple) throw IllegalStateException("Assignment requires a simple expression")
         return Expression.Assignment(name, value)
     }
 
     private fun call(): Expression.Call {
-        val name = require<Token.Literal.Identifier>()
+        val name = require<Token.Identifier>()
         val arguments = mutableListOf<Expression>()
         while (peek() !is Token.Bracket.Close) {
             arguments.add(expression())

@@ -107,13 +107,13 @@ internal class LexerImpl(
             when (identifier.toString()) {
                 "if" -> Token.Keyword.If
                 "while" -> Token.Keyword.While
-                "def" -> Token.Keyword.Def
+                "fn" -> Token.Keyword.Fn
                 "var" -> Token.Keyword.Var
                 "const" -> Token.Keyword.Const
                 "set" -> Token.Keyword.Set
                 "true" -> Token.Literal.Boolean(true)
                 "false" -> Token.Literal.Boolean(false)
-                else -> Token.Literal.Identifier(identifier.toString())
+                else -> Token.Identifier(identifier.toString())
             }
         }
 

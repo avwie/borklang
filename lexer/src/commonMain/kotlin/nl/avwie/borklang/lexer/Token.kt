@@ -34,17 +34,18 @@ sealed interface Token {
         data class Float(val value: kotlin.Double) : Literal
         data class String(val value: kotlin.String) : Literal
         data class Boolean(val value: kotlin.Boolean) : Literal
-        data class Identifier(val value: kotlin.String) : Literal
     }
 
     sealed interface Keyword : Token {
         data object If : Keyword
         data object While : Keyword
-        data object Def : Keyword
+        data object Fn : Keyword
         data object Var : Keyword
         data object Const : Keyword
         data object Set : Keyword
     }
+
+    data class Identifier(val value: kotlin.String) : Token
 
     data class Comment(val value: String) : Literal
 

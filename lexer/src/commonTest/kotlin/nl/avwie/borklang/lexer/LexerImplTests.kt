@@ -71,11 +71,11 @@ class LexerImplTests {
 
     @Test
     fun keywords() {
-        val lexer = Lexer.instance("if def var const")
+        val lexer = Lexer.instance("if fn var const")
         assertEquals(
             listOf(
                 Token.Keyword.If,
-                Token.Keyword.Def,
+                Token.Keyword.Fn,
                 Token.Keyword.Var,
                 Token.Keyword.Const,
                 Token.EOF
@@ -90,7 +90,7 @@ class LexerImplTests {
         assertEquals(
             listOf(
                 Token.Bracket.Open,
-                Token.Literal.Identifier("abc"),
+                Token.Identifier("abc"),
                 Token.Bracket.Close,
                 Token.EOF
             ),

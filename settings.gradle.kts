@@ -12,9 +12,9 @@ pluginManagement {
 }
 
 include(
-    ":common",
     ":compiler",
     ":lexer",
     ":parser",
+    ":samples",
     ":vm"
 )
