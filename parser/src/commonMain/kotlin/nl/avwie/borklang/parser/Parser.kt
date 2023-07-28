@@ -4,22 +4,24 @@ import nl.avwie.borklang.lexer.Lexer
 import nl.avwie.borklang.lexer.Token
 
 interface Parser {
-    fun parse(): Expression
+
+    fun parse(tokens: List<Token>): Expression
 
     companion object {
-        fun instance(tokens: List<Token>): Parser = ParserImpl(tokens)
+        fun instance(): Parser = ParserImpl()
     }
 }
 
-fun Parser.Companion.instance(source: String): Parser = instance(Lexer.instance(source).getTokens().toList())
+fun Parser.parse(input: String): Expression = parse(Lexer.instance().tokenize(input).toList())
 
-internal class ParserImpl(
-    tokens: List<Token>
-) : Parser {
+internal class ParserImpl() : Parser {
 
-    private val remaining = ArrayDeque(tokens)
+    private val remaining = ArrayDeque<Token>()
 
-    override fun parse(): Expression {
+    override fun parse(tokens: List<Token>): Expression {
+        remaining.clear()
+        remaining.addAll(tokens)
+
         val result = expression()
         if (!isEOF()) throw IllegalStateException("Expected EOF, but found ${peek()}")
         return result

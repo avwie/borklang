@@ -2,21 +2,22 @@ package nl.avwie.borklang.lexer
 
 interface Lexer {
 
-    fun getTokens(): Sequence<Token>
+    fun tokenize(input: String): Sequence<Token>
 
     companion object {
-        fun instance(source: String): Lexer = LexerImpl(
-            scanner = Scanner.instance(source)
-        )
+        fun instance(): Lexer = LexerImpl()
     }
 }
 
 
 
-internal class LexerImpl(
-    private val scanner: Scanner
-) : Lexer {
-    override fun getTokens(): Sequence<Token> = sequence {
+internal class LexerImpl() : Lexer {
+
+    private lateinit var scanner : Scanner;
+
+    override fun tokenize(input: String): Sequence<Token> = sequence {
+        scanner = Scanner.instance(input)
+
         while (!scanner.isEof()) {
             nextToken()?.also { yield(it) }
         }

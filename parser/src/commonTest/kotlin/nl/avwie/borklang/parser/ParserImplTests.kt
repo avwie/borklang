@@ -7,16 +7,15 @@ import kotlin.test.assertEquals
 
 class ParserImplTests {
 
+    private val parser = Parser.instance()
+
     @Test
     fun empty() {
-        val parser = Parser.instance(EMPTY)
-        assertEquals(Expression.Nil, parser.parse())
+        assertEquals(Expression.Nil, parser.parse(EMPTY))
     }
 
     @Test
     fun literal() {
-        val parser = Parser.instance(LITERAL)
-        val result = parser.parse()
         assertEquals(
             Expression.Block(
                 listOf(
@@ -27,34 +26,28 @@ class ParserImplTests {
                     Expression.Literal(Token.Literal.Boolean(false))
                 )
             ),
-            result
+            parser.parse(LITERAL)
         )
     }
 
     @Test
     fun variableDeclaration() {
-        val parser = Parser.instance(VARIABLE_DECLARATION)
-        val result = parser.parse()
         assertEquals(
             Expression.Declaration.Variable("x", Expression.Literal(Token.Literal.Integer(1))),
-            result
+            parser.parse(VARIABLE_DECLARATION)
         )
     }
 
     @Test
     fun constantDeclaration() {
-        val parser = Parser.instance(CONSTANT_DECLARATION)
-        val result = parser.parse()
         assertEquals(
             Expression.Declaration.Constant("x", Expression.Literal(Token.Literal.Integer(1))),
-            result
+            parser.parse(CONSTANT_DECLARATION)
         )
     }
 
     @Test
     fun functionDeclaration() {
-        val parser = Parser.instance(FUNCTION_DECLARATION)
-        val result = parser.parse()
         assertEquals(
             Expression.Declaration.Function(
                 "sum",
@@ -65,14 +58,12 @@ class ParserImplTests {
                     Expression.Identifier(Token.Identifier("y"))
                 )
             ),
-            result
+            parser.parse(FUNCTION_DECLARATION)
         )
     }
 
     @Test
     fun simpleProgram() {
-        val parser = Parser.instance(SIMPLE_PROGRAM)
-        val result = parser.parse()
         assertEquals(
             Expression.Block(
                 listOf(
@@ -103,7 +94,7 @@ class ParserImplTests {
                     )
                 )
             ),
-            result
+            parser.parse(SIMPLE_PROGRAM)
         )
     }
 }

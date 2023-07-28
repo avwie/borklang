@@ -5,33 +5,32 @@ import kotlin.test.assertEquals
 
 class LexerImplTests {
 
+    private val lexer = Lexer.instance()
+
     @Test
     fun empty() {
-        val lexer = Lexer.instance("")
         assertEquals(
             listOf(
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("").toList()
         )
     }
 
     @Test
     fun brackets() {
-        val lexer = Lexer.instance("[]")
         assertEquals(
             listOf(
                 Token.Bracket.Open,
                 Token.Bracket.Close,
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("[]").toList()
         )
     }
 
     @Test
     fun operators() {
-        val lexer = Lexer.instance("+-*/%^==!=><&&||!")
         assertEquals(
             listOf(
                 Token.Operator.Plus,
@@ -49,13 +48,12 @@ class LexerImplTests {
                 Token.Operator.Not,
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("+-*/%^==!=><&&||!").toList()
         )
     }
 
     @Test
     fun literals() {
-        val lexer = Lexer.instance("123 123.456 \"abc\" true false")
         assertEquals(
             listOf(
                 Token.Literal.Integer(123),
@@ -65,13 +63,12 @@ class LexerImplTests {
                 Token.Literal.Boolean(false),
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("123 123.456 \"abc\" true false").toList()
         )
     }
 
     @Test
     fun keywords() {
-        val lexer = Lexer.instance("if fn var const")
         assertEquals(
             listOf(
                 Token.Keyword.If,
@@ -80,13 +77,12 @@ class LexerImplTests {
                 Token.Keyword.Const,
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("if fn var const").toList()
         )
     }
 
     @Test
     fun identifier() {
-        val lexer = Lexer.instance("[abc]")
         assertEquals(
             listOf(
                 Token.Bracket.Open,
@@ -94,25 +90,23 @@ class LexerImplTests {
                 Token.Bracket.Close,
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("[abc]").toList()
         )
     }
 
     @Test
     fun whiteSpace() {
-        val lexer = Lexer.instance(" \t\n \"abc\" \t\t\n")
         assertEquals(
             listOf(
                 Token.Literal.String("abc"),
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize(" \t\n \"abc\" \t\t\n").toList()
         )
     }
 
     @Test
     fun comments() {
-        val lexer = Lexer.instance("# This is my file \n 123 # abc\n456")
         assertEquals(
             listOf(
                 Token.Comment(" This is my file "),
@@ -121,7 +115,7 @@ class LexerImplTests {
                 Token.Literal.Integer(456),
                 Token.EOF
             ),
-            lexer.getTokens().toList()
+            lexer.tokenize("# This is my file \n 123 # abc\n456").toList()
         )
     }
 }
