@@ -1,0 +1,6 @@
+[versions]
+# Jetbrains
+jetbrains-kotlin = "1.9.0"
+
+[libraries]
+# Jetbrains
