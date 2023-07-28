@@ -111,7 +111,7 @@ internal class LexerImpl(
                 "const" -> Token.Keyword.Const
                 "true" -> Token.Literal.Boolean(true)
                 "false" -> Token.Literal.Boolean(false)
-                else -> Token.Identifier(identifier.toString())
+                else -> Token.Literal.Identifier(identifier.toString())
             }
         }
 

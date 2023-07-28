@@ -91,7 +91,7 @@ class LexerImplTests {
         assertEquals(
             listOf(
                 Token.Bracket.Open,
-                Token.Identifier("abc"),
+                Token.Literal.Identifier("abc"),
                 Token.Bracket.Close,
                 Token.EOF
             ),
