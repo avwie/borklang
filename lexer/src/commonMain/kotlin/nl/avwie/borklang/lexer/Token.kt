@@ -7,23 +7,26 @@ sealed interface Token {
         data object Close : Bracket
     }
 
+
     sealed interface Operator : Token {
-        data object Plus : Operator
-        data object Minus : Operator
-        data object Multiply : Operator
-        data object Divide : Operator
-        data object Modulo : Operator
-        data object Power : Operator
-        data object Equals : Operator
-        data object DoubleEquals : Operator
-        data object NotEquals : Operator
-        data object GreaterThan : Operator
-        data object GreaterThanOrEqual : Operator
-        data object LessThan : Operator
-        data object LessThanOrEqual : Operator
-        data object And : Operator
-        data object Or : Operator
-        data object Not : Operator
+        sealed interface Unary : Operator
+        sealed interface Binary : Operator
+
+        data object Plus : Operator, Binary
+        data object Minus : Operator, Binary
+        data object Multiply : Operator, Binary
+        data object Divide : Operator, Binary
+        data object Modulo : Operator, Binary
+        data object Power : Operator, Binary
+        data object DoubleEquals : Operator, Binary
+        data object NotEquals : Operator, Binary
+        data object GreaterThan : Operator, Binary
+        data object GreaterThanOrEqual : Operator, Binary
+        data object LessThan : Operator, Binary
+        data object LessThanOrEqual : Operator, Binary
+        data object And : Operator, Binary
+        data object Or : Operator, Binary
+        data object Not : Operator, Unary
     }
 
     sealed interface Literal : Token {
@@ -36,9 +39,11 @@ sealed interface Token {
 
     sealed interface Keyword : Token {
         data object If : Keyword
+        data object While : Keyword
         data object Def : Keyword
         data object Var : Keyword
         data object Const : Keyword
+        data object Set : Keyword
     }
 
     data class Comment(val value: String) : Literal

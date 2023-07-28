@@ -31,7 +31,7 @@ class LexerImplTests {
 
     @Test
     fun operators() {
-        val lexer = Lexer.instance("+-*/%^===!=><&&||!")
+        val lexer = Lexer.instance("+-*/%^==!=><&&||!")
         assertEquals(
             listOf(
                 Token.Operator.Plus,
@@ -41,7 +41,6 @@ class LexerImplTests {
                 Token.Operator.Modulo,
                 Token.Operator.Power,
                 Token.Operator.DoubleEquals,
-                Token.Operator.Equals,
                 Token.Operator.NotEquals,
                 Token.Operator.GreaterThan,
                 Token.Operator.LessThan,

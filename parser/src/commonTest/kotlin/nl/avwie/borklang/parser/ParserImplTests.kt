@@ -6,7 +6,16 @@ class ParserImplTests {
 
     @Test
     fun empty() {
-        val parser = Parser.instance("[+ [+ 3 5] [+ 5 6]]")
+        val code = """
+            [
+                [var x 2]
+                [def multiply [a b] [* a b]]
+                
+                [multiply x 2]
+            ]
+        """.trimIndent()
+
+        val parser = Parser.instance(code)
         val result = parser.parse()
     }
 }

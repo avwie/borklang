@@ -5,6 +5,7 @@ import nl.avwie.borklang.lexer.Token
 sealed interface SExpression {
     data class List(val expressions: kotlin.collections.List<SExpression>) : SExpression
     data class Identifier(val value: kotlin.String) : SExpression
+    data class Keyword(val keyword: Token.Keyword) : SExpression
     data class Operator(val operator: Token.Operator) : SExpression
     sealed interface Number : SExpression {
         data class Integer(val value: kotlin.Int) : Number

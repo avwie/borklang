@@ -38,7 +38,7 @@ internal class LexerImpl(
                 scanner.scan()
                 Token.Operator.DoubleEquals
             }
-            else -> Token.Operator.Equals
+            else -> unexpectedCharacter(scanner.peek())
         }
 
         '!' -> when (scanner.peek()) {
@@ -106,9 +106,11 @@ internal class LexerImpl(
             }
             when (identifier.toString()) {
                 "if" -> Token.Keyword.If
+                "while" -> Token.Keyword.While
                 "def" -> Token.Keyword.Def
                 "var" -> Token.Keyword.Var
                 "const" -> Token.Keyword.Const
+                "set" -> Token.Keyword.Set
                 "true" -> Token.Literal.Boolean(true)
                 "false" -> Token.Literal.Boolean(false)
                 else -> Token.Literal.Identifier(identifier.toString())
@@ -143,5 +145,5 @@ internal class LexerImpl(
         else -> unexpectedCharacter(c)
     }
 
-    private fun unexpectedCharacter(c: Char): Nothing = throw IllegalStateException("Unexpected character: $c at ${scanner.line}:${scanner.column}")
+    private fun unexpectedCharacter(c: Char?): Nothing = throw IllegalStateException("Unexpected character: $c at ${scanner.line}:${scanner.column}")
 }
