@@ -68,4 +68,42 @@ class ParserImplTests {
             result
         )
     }
+
+    @Test
+    fun simpleProgram() {
+        val parser = Parser.instance(SIMPLE_PROGRAM)
+        val result = parser.parse()
+        assertEquals(
+            Expression.Block(
+                listOf(
+                    Expression.Literal(Token.Comment(" Simple program")),
+                    Expression.Declaration.Variable("x", Expression.Literal(Token.Literal.Integer(0))),
+                    Expression.Control.Loop(
+                        Expression.Operator.Binary(
+                            Token.Operator.LessThan,
+                            Expression.Identifier(Token.Identifier("x")),
+                            Expression.Literal(Token.Literal.Integer(10))
+                        ),
+                        Expression.Block(
+                            listOf(
+                                Expression.Call(
+                                    Token.Identifier("print"),
+                                    listOf(Expression.Identifier(Token.Identifier("x")))
+                                ),
+                                Expression.Assignment(
+                                    Token.Identifier("x"),
+                                    Expression.Operator.Binary(
+                                        Token.Operator.Plus,
+                                        Expression.Identifier(Token.Identifier("x")),
+                                        Expression.Literal(Token.Literal.Integer(1))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
+            result
+        )
+    }
 }

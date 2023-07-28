@@ -132,7 +132,6 @@ internal class ParserImpl(
     }
 
     private fun loop(): Expression.Control.Loop {
-        require<Token.Keyword.While>()
         val condition = expression()
         if (condition !is Expression.Simple) throw IllegalStateException("Loop requires a simple expression")
         val body = expression()
