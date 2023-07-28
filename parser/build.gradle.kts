@@ -7,4 +7,18 @@ kotlin {
     js(IR) {
         browser()
     }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(projects.lexer)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+    }
 }
