@@ -1,6 +1,6 @@
-package nl.avwie.borklang.parser
+package nl.avwie.borklang.ast
 
-import nl.avwie.borklang.lexer.Token
+import nl.avwie.borklang.tokens.Token
 
 sealed interface Expression {
 

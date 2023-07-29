@@ -11,6 +11,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(projects.common)
                 implementation(projects.lexer)
             }
         }

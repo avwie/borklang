@@ -1,7 +1,8 @@
 package nl.avwie.borklang.parser
 
-import nl.avwie.borklang.lexer.Token
+import nl.avwie.borklang.ast.Expression
 import nl.avwie.borklang.samples.*
+import nl.avwie.borklang.tokens.Token
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

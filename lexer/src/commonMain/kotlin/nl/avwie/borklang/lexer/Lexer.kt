@@ -1,5 +1,7 @@
 package nl.avwie.borklang.lexer
 
+import nl.avwie.borklang.tokens.Token
+
 interface Lexer {
 
     fun tokenize(input: String): Sequence<Token>

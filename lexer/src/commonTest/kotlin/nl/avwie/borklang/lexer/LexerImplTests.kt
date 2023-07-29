@@ -1,5 +1,6 @@
 package nl.avwie.borklang.lexer
 
+import nl.avwie.borklang.tokens.Token
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

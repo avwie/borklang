@@ -1,4 +1,4 @@
-package nl.avwie.borklang.lexer
+package nl.avwie.borklang.tokens
 
 sealed interface Token {
 
