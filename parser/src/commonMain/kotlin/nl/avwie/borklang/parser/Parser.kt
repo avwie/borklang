@@ -40,9 +40,9 @@ internal class ParserImpl() : Parser {
         else -> throw IllegalStateException("Expected literal, but found ${peek()}")
     }
 
-    private fun identifier(): Expression.Identifier = when (peek()) {
-        is Token.Identifier -> Expression.Identifier(require())
-        else -> throw IllegalStateException("Expected identifier, but found ${peek()}")
+    private fun identifier(): Expression = when (peek(1)) {
+        is Token.Bracket.Open -> call()
+        else -> Expression.Identifier(require())
     }
 
     private fun list(): Expression {
@@ -55,7 +55,8 @@ internal class ParserImpl() : Parser {
             when (peek()) {
                 is Token.Keyword -> expressions.add(keyword())
                 is Token.Operator -> expressions.add(operator())
-                is Token.Identifier -> expressions.add(call())
+                is Token.Identifier -> expressions.add(identifier())
+                is Token.Comment -> comment()
                 else -> expressions.add(expression())
             }
         }
@@ -157,16 +158,23 @@ internal class ParserImpl() : Parser {
 
     private fun call(): Expression.Call {
         val name = require<Token.Identifier>()
+        require<Token.Bracket.Open>()
         val arguments = mutableListOf<Expression>()
         while (peek() !is Token.Bracket.Close) {
             arguments.add(expression())
         }
+        require<Token.Bracket.Close>()
         if (arguments.any { it !is Expression.Simple }) throw IllegalStateException("Function calls require simple expressions")
         return Expression.Call(name, arguments.filterIsInstance<Expression.Simple>())
     }
 
+    private fun comment(): Expression {
+        require<Token.Comment>()
+        return Expression.Nil
+    }
+
     private fun next(): Token? = remaining.removeFirstOrNull()
-    private fun peek(): Token? = remaining.firstOrNull()
+    private fun peek(ahead: Int = 0): Token? = remaining.getOrNull(ahead)
 
     private inline fun <reified T : Token> require(): T {
         if (peek() !is T) throw IllegalStateException("Expected ${T::class}, but found ${peek()}")

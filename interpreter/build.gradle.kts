@@ -11,7 +11,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.parser)
+                implementation(projects.common)
             }
         }
 
@@ -19,6 +19,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(projects.samples)
+                implementation(projects.parser)
             }
         }
     }

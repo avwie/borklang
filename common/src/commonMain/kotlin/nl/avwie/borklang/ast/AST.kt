@@ -4,8 +4,8 @@ import nl.avwie.borklang.tokens.Token
 
 sealed interface Expression {
 
-    sealed interface Simple
-    sealed interface Complex
+    sealed interface Simple : Expression
+    sealed interface Complex : Expression
 
     data object Nil : Expression, Simple
 

@@ -68,7 +68,6 @@ class ParserImplTests {
         assertEquals(
             Expression.Block(
                 listOf(
-                    Expression.Literal(Token.Comment(" Simple program")),
                     Expression.Declaration.Variable("x", Expression.Literal(Token.Literal.Integer(0))),
                     Expression.Control.Loop(
                         Expression.Operator.Binary(

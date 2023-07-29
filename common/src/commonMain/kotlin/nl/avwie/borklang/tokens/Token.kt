@@ -47,7 +47,7 @@ sealed interface Token {
 
     data class Identifier(val value: kotlin.String) : Token
 
-    data class Comment(val value: String) : Literal
+    data class Comment(val value: String) : Token
 
     data object EOF : Token
 

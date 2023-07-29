@@ -17,9 +17,17 @@ const val SIMPLE_PROGRAM = """
         
         [while [< x 10]
             [
-                [print x]
+                [print [x]]
                 [set x [+ x 1]]
             ]
         ]
+    ]
+"""
+
+const val SET_AND_GET = """
+    [
+        # Set and get
+        [var x 4]
+        x
     ]
 """
