@@ -42,3 +42,10 @@ const val CONDITIONAL = """
         ]
     ]
 """
+
+const val FUNCTION_CALL = """
+    [
+        [fn sum [x y] [+ x y]]
+        [sum [1 2]]
+    ]
+"""

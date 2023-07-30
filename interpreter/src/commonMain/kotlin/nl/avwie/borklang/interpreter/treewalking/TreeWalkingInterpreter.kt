@@ -6,17 +6,19 @@ import nl.avwie.borklang.tokens.Token
 import kotlin.math.pow
 
 class TreeWalkingInterpreter(
-    private val scope: Scope = Scope()
+    scope: Scope = Scope()
 ) : Interpreter {
+
+    private val scopes = ArrayDeque<Scope>().also { it.add(scope) }
+    private val scope get() = scopes.last()
+
     override fun evaluate(expression: Expression): Any = when (expression) {
         is Expression.Assignment -> assignment(expression)
         is Expression.Block -> block(expression)
-        is Expression.Call -> TODO()
+        is Expression.Call -> call(expression)
         is Expression.Control.Conditional -> conditional(expression)
         is Expression.Control.Loop -> TODO()
-        is Expression.Declaration.Constant -> declaration(expression)
-        is Expression.Declaration.Function -> TODO()
-        is Expression.Declaration.Variable -> declaration(expression)
+        is Expression.Declaration -> declaration(expression)
         is Expression.Identifier -> identifier(expression)
         is Expression.Literal -> literal(expression)
         Expression.Nil -> Unit
@@ -47,13 +49,15 @@ class TreeWalkingInterpreter(
         is Expression.Declaration.Variable -> evaluate(declaration.value).also {
             scope.declareVariable(declaration.name, it)
         }
-        is Expression.Declaration.Function -> TODO()
+        is Expression.Declaration.Function -> scope.declareFunction(declaration.name, declaration)
     }
 
     private fun block(block: Expression.Block): Any {
         var result: Any = Unit
-        for (expression in block.expressions) {
-            result = evaluate(expression)
+        scoped {
+            for (expression in block.expressions) {
+                result = evaluate(expression)
+            }
         }
         return result
     }
@@ -61,8 +65,10 @@ class TreeWalkingInterpreter(
     private fun identifier(identifier: Expression.Identifier): Any {
         val constant = scope.getConstant(identifier.identifier.name)
         if (constant != null) return constant
+
         val variable = scope.getVariable(identifier.identifier.name)
         if (variable != null) return variable
+
         throw IllegalStateException("Identifier ${identifier.identifier.name} is not declared")
     }
 
@@ -94,6 +100,22 @@ class TreeWalkingInterpreter(
         Token.Operator.Not -> !evaluate(unary.operand).asBoolean()
     }
 
+    private fun call(call: Expression.Call): Any {
+        val function = scope.getFunction(call.identifier.name)
+            ?: throw IllegalStateException("Function ${call.identifier.name} is not declared")
+
+        if (function.parameters.size != call.arguments.size) throw IllegalStateException("Function ${call.identifier.name} expects ${function.parameters.size} arguments, but ${call.arguments.size} were given")
+
+        val result = scoped {
+            for ((parameter, argument) in function.parameters.zip(call.arguments)) {
+                scope.declareVariable(parameter.name, evaluate(argument))
+            }
+            evaluate(function.body)
+        }
+
+        return result
+    }
+
     private fun Any.asBoolean(): Boolean = when (this) {
         is Boolean -> this
         is Int -> this != 0
@@ -108,5 +130,12 @@ class TreeWalkingInterpreter(
         is Float -> this
         is String -> this.toIntOrNull() ?: this.toFloatOrNull() ?: throw IllegalStateException("Cannot convert $this to number")
         else -> throw IllegalStateException("Cannot convert $this to number")
+    }
+
+    private fun scoped(block: () -> Any): Any {
+        scopes.add(Scope())
+        val result = block()
+        scopes.removeLast()
+        return result
     }
 }
