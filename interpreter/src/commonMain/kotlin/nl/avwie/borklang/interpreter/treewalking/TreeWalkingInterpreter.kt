@@ -128,12 +128,13 @@ class TreeWalkingInterpreter(
         is Boolean -> if (this) 1 else 0
         is Int -> this
         is Float -> this
+        is Double -> this
         is String -> this.toIntOrNull() ?: this.toFloatOrNull() ?: throw IllegalStateException("Cannot convert $this to number")
         else -> throw IllegalStateException("Cannot convert $this to number")
     }
 
     private fun scoped(block: () -> Any): Any {
-        scopes.add(Scope())
+        scopes.add(scope.child())
         val result = block()
         scopes.removeLast()
         return result

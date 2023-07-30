@@ -49,3 +49,20 @@ const val FUNCTION_CALL = """
         [sum [1 2]]
     ]
 """
+
+const val SCOPES = """
+    [
+        [var x 0]
+        [fn inc [amount] [
+            [var y 2]
+            [fn add [] [
+                [set x [+ amount y]]
+            ]]
+            [set y [+ y 1]]
+            [add []]
+        ]]
+        
+        [inc [2]]
+        x
+    ]
+"""

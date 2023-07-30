@@ -26,7 +26,9 @@ class Scope(private val parent: Scope? = null) {
 
     fun hasVariable(name: String): Boolean = variables.containsKey(name) || (parent?.hasVariable(name) ?: false)
 
-    fun getVariable(name: String): Any? = variables[name] ?: parent?.getVariable(name)
+    fun getVariable(name: String): Any? {
+        return variables[name] ?: parent?.getVariable(name)
+    }
 
     fun setVariable(name: String, value: Any?) {
         when  {
