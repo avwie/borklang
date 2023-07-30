@@ -47,4 +47,31 @@ class TreeWalkingInterpreterTests {
         val result = interpreter.evaluate(parse(WHILE))
         assertEquals(10.0, result)
     }
+
+    @Test
+    fun nativeFunction() {
+        val output = StringBuilder()
+        val scope = Scope.default(
+            stdOut = { output.appendLine(it) }
+        )
+        val interpreter = TreeWalkingInterpreter(scope)
+        interpreter.evaluate(parse(SIMPLE_PROGRAM))
+
+        assertEquals(
+            """
+                0
+                1.0
+                2.0
+                3.0
+                4.0
+                5.0
+                6.0
+                7.0
+                8.0
+                9.0
+                
+            """.trimIndent(),
+            output.toString()
+        )
+    }
 }

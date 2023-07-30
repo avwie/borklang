@@ -118,9 +118,13 @@ class TreeWalkingInterpreter(
 
         val result = scoped {
             for ((parameter, argument) in function.parameters.zip(call.arguments)) {
-                scope.declareVariable(parameter.name, evaluate(argument))
+                scope.declareVariable(parameter, evaluate(argument))
             }
-            evaluate(function.body)
+
+            when (function) {
+                is Scope.Function.Native -> function.block(scope)
+                is Scope.Function.UserDefined -> evaluate(function.body)
+            }
         }
 
         return result

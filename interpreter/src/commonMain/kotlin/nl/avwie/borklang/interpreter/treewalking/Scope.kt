@@ -2,11 +2,29 @@ package nl.avwie.borklang.interpreter.treewalking
 
 import nl.avwie.borklang.ast.Expression
 
-class Scope(private val parent: Scope? = null) {
+class Scope(
+    private val parent: Scope? = null
+) {
+    sealed interface Function {
+
+        val name: String
+        val parameters: List<String>
+        data class Native(
+            override val name: String,
+            override val parameters: List<String>,
+            val block: Scope.() -> Any
+        ) : Function
+
+        data class UserDefined(
+            override val name: String,
+            override val parameters: List<String>,
+            val body: Expression
+        ) : Function
+    }
 
     private val constants = mutableMapOf<String, Any?>()
     private val variables = mutableMapOf<String, Any?>()
-    private val functions = mutableMapOf<String, Expression.Declaration.Function>()
+    private val functions = mutableMapOf<String, Function>()
 
     fun declareConstant(name: String, value: Any?) {
         if (hasConstant(name)) throw IllegalStateException("Cannot declare constant $name, constant with same name exists")
@@ -38,13 +56,27 @@ class Scope(private val parent: Scope? = null) {
         }
     }
 
+    fun declareNativeFunction(name: String, parameters: List<String>, block: Scope.() -> Any) {
+        functions[name] = Function.Native(name, parameters, block)
+    }
+
     fun declareFunction(name: String, function: Expression.Declaration.Function) {
-        functions[name] = function
+        functions[name] = Function.UserDefined(name, function.parameters.map { it.name }, function.body)
     }
 
     fun hasFunction(name: String): Boolean = functions.containsKey(name) || (parent?.hasFunction(name) ?: false)
 
-    fun getFunction(name: String): Expression.Declaration.Function? = functions[name] ?: parent?.getFunction(name)
+    fun getFunction(name: String): Function? = functions[name] ?: parent?.getFunction(name)
 
     fun child(): Scope = Scope(this)
+
+    companion object {
+        fun default(
+            stdOut: (Any?) -> Unit = { println(it) },
+        ): Scope = Scope().apply {
+            declareNativeFunction("print", listOf("value")) {
+                stdOut(getVariable("value"))
+            }
+        }
+    }
 }
