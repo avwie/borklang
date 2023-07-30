@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/interpreter" />
             <option value="$PROJECT_DIR$/lexer" />
             <option value="$PROJECT_DIR$/parser" />
+            <option value="$PROJECT_DIR$/repl" />
             <option value="$PROJECT_DIR$/samples" />
             <option value="$PROJECT_DIR$/vm" />
           </set>

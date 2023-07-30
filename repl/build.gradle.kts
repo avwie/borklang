@@ -1,9 +1,12 @@
 plugins {
     kotlin("multiplatform")
+    application
 }
 
 kotlin {
-    jvm()
+    jvm {
+        withJava()
+    }
     js(IR) {
         browser()
     }
@@ -11,8 +14,13 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(projects.parser)
                 implementation(projects.interpreter)
             }
         }
     }
+}
+
+application {
+    mainClass.set("nl.avwie.borklang.repl.REPLKt")
 }
