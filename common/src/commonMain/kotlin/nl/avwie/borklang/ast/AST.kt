@@ -17,7 +17,7 @@ sealed interface Expression {
 
     data class Assignment(val identifier: Token.Identifier, val value: Simple) : Expression, Complex
 
-    data class Call(val identifier: Token.Identifier, val arguments: List<Simple>) : Expression, Complex
+    data class Call(val identifier: Token.Identifier, val arguments: List<Simple>) : Expression, Simple
 
     sealed interface Declaration : Expression, Complex {
         data class Variable(val name: String, val value: Simple) : Declaration

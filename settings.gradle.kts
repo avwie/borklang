@@ -17,6 +17,7 @@ include(
     ":interpreter",
     ":lexer",
     ":parser",
+    ":repl",
     ":samples",
     ":vm"
 )

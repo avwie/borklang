@@ -74,4 +74,11 @@ class TreeWalkingInterpreterTests {
             output.toString()
         )
     }
+
+    @Test
+    fun fibonacci() {
+        val interpreter = TreeWalkingInterpreter()
+        val result = interpreter.evaluate(parse(FIBONACCI))
+        assertEquals(89.0, result)
+    }
 }

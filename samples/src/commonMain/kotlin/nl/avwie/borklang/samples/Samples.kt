@@ -74,3 +74,20 @@ const val WHILE = """
         x
     ]
 """
+
+const val FIBONACCI = """
+    [
+        [fn fib [n] [
+            [var a 1]
+            [if [> n 1] [
+                [var na [- n 1]]
+                [var nb [- n 2]]
+                [var fa [fib [na]]]
+                [var fb [fib [nb]]]
+                [set a [+ fa fb]]
+            ]]
+            a
+        ]]
+        [fib [10]]
+    ]
+"""

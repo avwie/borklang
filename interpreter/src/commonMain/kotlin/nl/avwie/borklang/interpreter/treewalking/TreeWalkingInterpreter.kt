@@ -29,8 +29,8 @@ class TreeWalkingInterpreter(
     private fun assignment(assignment: Expression.Assignment): Any {
         val value = evaluate(assignment.value)
         when {
-            scope.hasConstant(assignment.identifier.name) -> throw IllegalStateException("Cannot assign to constant ${assignment.identifier.name}")
-            scope.hasVariable(assignment.identifier.name) -> scope.setVariable(assignment.identifier.name, value)
+            scope.hasConstant(assignment.identifier.name, checkParent = true) -> throw IllegalStateException("Cannot assign to constant ${assignment.identifier.name}")
+            scope.hasVariable(assignment.identifier.name, checkParent = true) -> scope.setVariable(assignment.identifier.name, value)
             else -> throw IllegalStateException("Identifier ${assignment.identifier.name} is not declared")
         }
         return value

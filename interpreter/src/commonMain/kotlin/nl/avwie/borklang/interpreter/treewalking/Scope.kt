@@ -27,22 +27,22 @@ class Scope(
     private val functions = mutableMapOf<String, Function>()
 
     fun declareConstant(name: String, value: Any?) {
-        if (hasConstant(name)) throw IllegalStateException("Cannot declare constant $name, constant with same name exists")
-        if (hasVariable(name)) throw IllegalStateException("Cannot declare constant $name, variable with same name exists")
+        if (hasConstant(name, checkParent = false)) throw IllegalStateException("Cannot declare constant $name, constant with same name exists")
+        if (hasVariable(name, checkParent = false)) throw IllegalStateException("Cannot declare constant $name, variable with same name exists")
         constants[name] = value
     }
 
-    fun hasConstant(name: String): Boolean = constants.containsKey(name) || (parent?.hasConstant(name) ?: false)
+    fun hasConstant(name: String, checkParent: Boolean): Boolean = constants.containsKey(name) || (checkParent && parent?.hasConstant(name, checkParent) ?: false)
 
     fun getConstant(name: String): Any? = constants[name] ?: parent?.getConstant(name)
 
     fun declareVariable(name: String, value: Any?) {
-        if (hasConstant(name)) throw IllegalStateException("Cannot declare variable $name, constant with same name exists")
-        if (hasVariable(name)) throw IllegalStateException("Cannot declare variable $name, variable with same name exists")
+        if (hasConstant(name, checkParent = false)) throw IllegalStateException("Cannot declare variable $name, constant with same name exists")
+        if (hasVariable(name, checkParent = false)) throw IllegalStateException("Cannot declare variable $name, variable with same name exists")
         variables[name] = value
     }
 
-    fun hasVariable(name: String): Boolean = variables.containsKey(name) || (parent?.hasVariable(name) ?: false)
+    fun hasVariable(name: String, checkParent: Boolean): Boolean = variables.containsKey(name) || (checkParent && parent?.hasVariable(name, checkParent) ?: false)
 
     fun getVariable(name: String): Any? {
         return variables[name] ?: parent?.getVariable(name)
