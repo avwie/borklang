@@ -31,7 +31,7 @@ sealed interface Expression {
     }
 
     sealed interface Operator : Expression, Simple {
-        data class Unary(val operator: Token.Operator, val operand: Simple) : Operator
-        data class Binary(val operator: Token.Operator, val left: Simple, val right: Simple) : Operator
+        data class Unary(val operator: Token.Operator.Unary, val operand: Simple) : Operator
+        data class Binary(val operator: Token.Operator.Binary, val left: Simple, val right: Simple) : Operator
     }
 }

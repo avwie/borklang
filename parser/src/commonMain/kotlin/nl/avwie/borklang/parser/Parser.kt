@@ -108,7 +108,7 @@ internal class ParserImpl() : Parser {
     private fun constant(): Expression.Declaration.Constant {
         val name = require<Token.Identifier>()
         val value = literal()
-        return Expression.Declaration.Constant(name.value, value)
+        return Expression.Declaration.Constant(name.name, value)
     }
 
     private fun function(): Expression.Declaration.Function {
@@ -120,11 +120,10 @@ internal class ParserImpl() : Parser {
         }
         require<Token.Bracket.Close>()
         val body = expression()
-        return Expression.Declaration.Function(name.value, parameters, body)
+        return Expression.Declaration.Function(name.name, parameters, body)
     }
 
     private fun conditional(): Expression.Control.Conditional {
-        require<Token.Keyword.If>()
         val condition = expression()
         if (condition !is Expression.Simple) throw IllegalStateException("Conditional requires a simple expression")
 
@@ -146,7 +145,7 @@ internal class ParserImpl() : Parser {
         val name = require<Token.Identifier>()
         val value = expression()
         if (value !is Expression.Simple) throw IllegalStateException("Variable requires a simple expression")
-        return Expression.Declaration.Variable(name.value, value)
+        return Expression.Declaration.Variable(name.name, value)
     }
 
     private fun assignment(): Expression.Assignment {

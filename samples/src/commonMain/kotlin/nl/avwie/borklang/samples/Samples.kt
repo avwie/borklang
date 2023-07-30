@@ -27,7 +27,18 @@ const val SIMPLE_PROGRAM = """
 const val SET_AND_GET = """
     [
         # Set and get
-        [var x 4]
+        [var x 0]
+        [set x 4]
         x
+    ]
+"""
+
+const val CONDITIONAL = """
+    [
+        [var x 0]
+        [if [== x 0]
+            [set x 1]
+            [set x 2]
+        ]
     ]
 """
