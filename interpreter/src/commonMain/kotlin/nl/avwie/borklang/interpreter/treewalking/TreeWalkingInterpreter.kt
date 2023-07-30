@@ -17,7 +17,7 @@ class TreeWalkingInterpreter(
         is Expression.Block -> block(expression)
         is Expression.Call -> call(expression)
         is Expression.Control.Conditional -> conditional(expression)
-        is Expression.Control.Loop -> TODO()
+        is Expression.Control.Loop -> loop(expression)
         is Expression.Declaration -> declaration(expression)
         is Expression.Identifier -> identifier(expression)
         is Expression.Literal -> literal(expression)
@@ -40,6 +40,16 @@ class TreeWalkingInterpreter(
         val condition = evaluate(conditional.condition)
         if (condition !is Boolean) throw IllegalStateException("Condition must be a boolean")
         return if (condition) evaluate(conditional.then) else evaluate(conditional.otherwise ?: Expression.Nil)
+    }
+
+    private fun loop(loop: Expression.Control.Loop): Any {
+        var result: Any = Unit
+        while (evaluate(loop.condition).asBoolean()) {
+            result = scoped {
+                evaluate(loop.body)
+            }
+        }
+        return result
     }
 
     private fun declaration(declaration: Expression.Declaration): Any = when (declaration) {

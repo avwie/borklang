@@ -3,10 +3,7 @@ package nl.avwie.borklang.interpreter.treewalking
 import nl.avwie.borklang.ast.Expression
 import nl.avwie.borklang.parser.Parser
 import nl.avwie.borklang.parser.parse
-import nl.avwie.borklang.samples.CONDITIONAL
-import nl.avwie.borklang.samples.FUNCTION_CALL
-import nl.avwie.borklang.samples.SCOPES
-import nl.avwie.borklang.samples.SET_AND_GET
+import nl.avwie.borklang.samples.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -42,5 +39,12 @@ class TreeWalkingInterpreterTests {
         val interpreter = TreeWalkingInterpreter()
         val result = interpreter.evaluate(parse(SCOPES))
         assertEquals(5.0, result)
+    }
+
+    @Test
+    fun whileLoop() {
+        val interpreter = TreeWalkingInterpreter()
+        val result = interpreter.evaluate(parse(WHILE))
+        assertEquals(10.0, result)
     }
 }

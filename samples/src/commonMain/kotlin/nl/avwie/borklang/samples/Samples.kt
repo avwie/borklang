@@ -66,3 +66,11 @@ const val SCOPES = """
         x
     ]
 """
+
+const val WHILE = """
+    [
+        [var x 0]
+        [while [< x 10] [set x [+ x 1]]]
+        x
+    ]
+"""
