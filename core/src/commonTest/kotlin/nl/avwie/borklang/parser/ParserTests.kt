@@ -92,4 +92,28 @@ class ParserTests {
         assertTrue { program.statements[0] is AST.Block }
         assertTrue { program.statements[1] is AST.Block }
     }
+
+    @Test
+    fun nestedBlocks() {
+        val program = Grammar.parseToEnd("""
+            {
+                {
+                    const x = 123;
+                }
+                let y = 456;
+            }
+            
+            {
+                const z = 789;
+            }
+        """.trimIndent())
+        require(program is AST.Program)
+        assertEquals(2, (program).statements.size)
+        assertTrue { program.statements[0] is AST.Block }
+        assertTrue { program.statements[1] is AST.Block }
+        require(program.statements[0] is AST.Block)
+        assertEquals(2, (program.statements[0] as AST.Block).statements.size)
+        assertTrue { (program.statements[0] as AST.Block).statements[0] is AST.Block }
+        assertTrue { (program.statements[0] as AST.Block).statements[1] is AST.Declaration.Variable }
+    }
 }
