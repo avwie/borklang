@@ -1,72 +1,53 @@
 package nl.avwie.borklang.parser
 
+import com.github.h0tk3y.betterParse.lexer.Token
 import com.github.h0tk3y.betterParse.lexer.literalToken
 import com.github.h0tk3y.betterParse.lexer.regexToken
+import kotlin.reflect.KProperty
 
-object Tokens {
+object Tokens : TokenSetBuilder() {
 
-    val whitespace = regexToken("\\s+", ignore = true)
-    val newline = regexToken("[\r\n]+", ignore = true)
-    val semicolon = literalToken(";")
-    val comma = literalToken(",")
-    val leftBrace = literalToken("{")
-    val rightBrace = literalToken("}")
-    val leftParenthesis = literalToken("(")
-    val rightParenthesis = literalToken(")")
+    val whitespace by regexToken("\\s+", ignore = true)
+    val newline by regexToken("[\r\n]+", ignore = true)
+    val semicolon by literalToken(";")
+    val comma by literalToken(",")
+    val leftBrace by literalToken("{")
+    val rightBrace by literalToken("}")
+    val leftParenthesis by literalToken("(")
+    val rightParenthesis by literalToken(")")
 
-    val const = literalToken("const")
-    val let = literalToken("let")
-    val nil = literalToken("Nil")
+    val const by literalToken("const")
+    val let by literalToken("let")
+    val nil by literalToken("Nil")
 
-    val number = regexToken("-?\\d+")
-    val string = regexToken("\"[^\"]*\"")
-    val identifier = regexToken("[a-zA-Z_][a-zA-Z0-9_]*")
+    val number by regexToken("-?\\d+")
+    val string by regexToken("\"[^\"]*\"")
+    val identifier by regexToken("[a-zA-Z_][a-zA-Z0-9_]*")
 
-    val plus = literalToken("+")
-    val minus = literalToken("-")
-    val multiply = literalToken("*")
-    val divide = literalToken("/")
-    val modulo = literalToken("%")
+    val plus by literalToken("+")
+    val minus by literalToken("-")
+    val multiply by literalToken("*")
+    val divide by literalToken("/")
+    val modulo by literalToken("%")
 
-    val doubleEqual = literalToken("==")
-    val equal = literalToken("=")
-    val lessThan = literalToken("<")
-    val lessThanOrEqual = literalToken("<=")
-    val greaterThan = literalToken(">")
-    val greaterThanOrEqual = literalToken(">=")
+    val doubleEqual by literalToken("==")
+    val equal by literalToken("=")
+    val lessThan by literalToken("<")
+    val lessThanOrEqual by literalToken("<=")
+    val greaterThan by literalToken(">")
+    val greaterThanOrEqual by literalToken(">=")
+}
 
-    fun asList() = listOf(
-        whitespace,
-        newline,
-        semicolon,
-        comma,
-        leftBrace,
-        rightBrace,
-        leftParenthesis,
-        rightParenthesis,
+abstract class TokenSetBuilder(
+    private val tokens: MutableList<Token> = mutableListOf()
+) : List<Token> by tokens {
+    protected operator fun Token.provideDelegate(thisRef: TokenSetBuilder, property: KProperty<*>): Token =
+        also {
+            if (it.name == null) {
+                it.name = property.name
+            }
+            tokens.add(it)
+        }
 
-        // keywords
-        const,
-        let,
-        nil,
-
-        // literals
-        number,
-        string,
-        identifier,
-
-        // operators
-        plus,
-        minus,
-        multiply,
-        divide,
-        modulo,
-
-        doubleEqual,
-        equal,
-        lessThan,
-        lessThanOrEqual,
-        greaterThan,
-        greaterThanOrEqual,
-    )
+    protected operator fun Token.getValue(thisRef: TokenSetBuilder, property: KProperty<*>): Token = this
 }

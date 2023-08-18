@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class TokensTests {
 
-    private val tokenizer = DefaultTokenizer(Tokens.asList())
+    private val tokenizer = DefaultTokenizer(Tokens)
 
     @Test
     fun numbers() {

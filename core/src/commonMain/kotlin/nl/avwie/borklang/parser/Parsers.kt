@@ -35,7 +35,7 @@ object Parsers {
 }
 
 object Grammar : Grammar<AST>() {
-    override val tokens: List<Token> = Tokens.asList()
+    override val tokens: List<Token> = Tokens
     override val rootParser: Parser<AST> = Parsers.program
 }
 
