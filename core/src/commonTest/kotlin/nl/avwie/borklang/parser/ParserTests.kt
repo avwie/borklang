@@ -25,6 +25,17 @@ class ParserTests {
     }
 
     @Test
+    fun booleans() {
+        val trueToken = Grammar.parseToEnd("True")
+        assertTrue { trueToken is AST.Constant }
+        assertEquals(true, (trueToken as AST.Constant.Boolean).value)
+
+        val falseToken = Grammar.parseToEnd("False")
+        assertTrue { falseToken is AST.Constant }
+        assertEquals(false, (falseToken as AST.Constant.Boolean).value)
+    }
+
+    @Test
     fun identifiers() {
         val identifier = Grammar.parseToEnd("hello_world")
         assertTrue { identifier is AST.Identifier }

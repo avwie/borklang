@@ -18,6 +18,7 @@ sealed interface AST {
     sealed interface Expression : Statement
     data object Nil : Expression
     sealed interface Constant : Expression {
+        data class Boolean(val value: kotlin.Boolean): Constant
         data class Number(val value: Int): Constant
         data class String(val value: kotlin.String): Constant
     }

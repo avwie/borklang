@@ -20,6 +20,8 @@ object Tokens : TokenSetBuilder() {
     val let by literalToken("let")
     val fn by literalToken("fn")
     val nil by literalToken("Nil")
+    val trueToken by literalToken("True")
+    val falseToken by literalToken("False")
 
     val number by regexToken("-?\\d+")
     val string by regexToken("\"[^\"]*\"")

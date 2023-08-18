@@ -9,7 +9,8 @@ import com.github.h0tk3y.betterParse.parser.Parser
 object Parsers {
     val number: Parser<AST.Constant.Number> = Tokens.number.use { AST.Constant.Number(text.toInt()) }
     val string: Parser<AST.Constant.String> = Tokens.string.use { AST.Constant.String(text.substring(1, text.length - 1)) }
-    val constant: Parser<AST.Constant> = number or string
+    val boolean: Parser<AST.Constant.Boolean> = (Tokens.trueToken or Tokens.falseToken).use { AST.Constant.Boolean(text == "True") }
+    val constant: Parser<AST.Constant> = number or string or boolean
     val nil: Parser<AST.Nil> = Tokens.nil use { AST.Nil }
 
     val identifier: Parser<AST.Identifier> = Tokens.identifier.use { AST.Identifier(text) }
