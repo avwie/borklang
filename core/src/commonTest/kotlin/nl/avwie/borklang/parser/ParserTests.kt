@@ -74,4 +74,22 @@ class ParserTests {
         assertEquals("y", (program.statements[1] as AST.Declaration.Variable).identifier.name)
         assertEquals(456, ((program.statements[1] as AST.Declaration.Variable).expression as AST.Constant.Number).value)
     }
+
+    @Test
+    fun block() {
+        val program = Grammar.parseToEnd("""
+            {
+                const x = 123;
+                let y = 456;
+            }
+            
+            {
+                const z = 789;
+            }
+        """.trimIndent())
+        require(program is AST.Program)
+        assertEquals(2, (program).statements.size)
+        assertTrue { program.statements[0] is AST.Block }
+        assertTrue { program.statements[1] is AST.Block }
+    }
 }

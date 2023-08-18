@@ -4,6 +4,8 @@ sealed interface AST {
     sealed interface Statement : AST
 
     data class Program(val statements: List<Statement>): AST
+
+    data class Block(val statements: List<Statement>): Statement
     data class Assignment(val identifier: Identifier, val expression: Expression): Statement
 
     sealed interface Declaration : Statement {

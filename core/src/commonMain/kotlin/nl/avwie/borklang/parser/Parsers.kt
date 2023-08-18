@@ -2,6 +2,7 @@ package nl.avwie.borklang.parser
 
 import com.github.h0tk3y.betterParse.combinators.*
 import com.github.h0tk3y.betterParse.grammar.Grammar
+import com.github.h0tk3y.betterParse.grammar.parser
 import com.github.h0tk3y.betterParse.lexer.Token
 import com.github.h0tk3y.betterParse.parser.Parser
 
@@ -24,7 +25,9 @@ object Parsers {
         }
     }
 
-    val statement: Parser<AST.Statement> = (declaration or assignment or expression) and skip(zeroOrMore(Tokens.newline or Tokens.semicolon))
+    val block: Parser<AST.Block> = skip(Tokens.leftBrace) and oneOrMore(parser { statement }) and skip(Tokens.rightBrace) map { AST.Block(it) }
+
+    val statement: Parser<AST.Statement> = (block or declaration or assignment or expression) and skip(zeroOrMore(Tokens.newline or Tokens.semicolon))
 
     val program: Parser<AST> = oneOrMore(statement).map { statements ->
         if (statements.size == 1) statements[0] else AST.Program(statements)
