@@ -139,4 +139,36 @@ class ParserTests {
         assertEquals("x", (program.statements[1] as AST.Declaration.Function).parameters[0].name)
         assertEquals("y", (program.statements[1] as AST.Declaration.Function).parameters[1].name)
     }
+
+    @Test
+    fun functionCall() {
+        val program = Grammar.parseToEnd("""
+            foo();
+            bar(123, "hello world");
+        """.trimIndent())
+
+        require(program is AST.Program)
+        assertEquals(2, (program).statements.size)
+        assertTrue { program.statements[0] is AST.FunctionCall }
+        assertEquals(0, (program.statements[0] as AST.FunctionCall).arguments.size)
+        assertTrue { program.statements[1] is AST.FunctionCall }
+        assertEquals(2, (program.statements[1] as AST.FunctionCall).arguments.size)
+        assertTrue { (program.statements[1] as AST.FunctionCall).arguments[0] is AST.Constant.Number }
+        assertEquals(123, ((program.statements[1] as AST.FunctionCall).arguments[0] as AST.Constant.Number).value)
+    }
+
+    @Test
+    fun nestedFunctionCall() {
+        val statement = Grammar.parseToEnd("""
+            foo(bar(123, "hello world"));
+        """.trimIndent())
+
+        require(statement is AST.Statement)
+        assertTrue { statement is AST.FunctionCall }
+        assertEquals(1, (statement as AST.FunctionCall).arguments.size)
+        assertTrue { statement.arguments[0] is AST.FunctionCall }
+        assertEquals(2, (statement.arguments[0] as AST.FunctionCall).arguments.size)
+        assertTrue { (statement.arguments[0] as AST.FunctionCall).arguments[0] is AST.Constant.Number }
+        assertEquals(123, ((statement.arguments[0] as AST.FunctionCall).arguments[0] as AST.Constant.Number).value)
+    }
 }

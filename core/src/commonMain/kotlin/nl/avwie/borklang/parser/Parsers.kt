@@ -13,7 +13,22 @@ object Parsers {
     val nil: Parser<AST.Nil> = Tokens.nil use { AST.Nil }
 
     val identifier: Parser<AST.Identifier> = Tokens.identifier.use { AST.Identifier(text) }
-    val expression: Parser<AST.Expression> =  identifier or constant or nil
+
+    val argumentsList: Parser<List<AST.Expression>> = (
+            parser { expression } and zeroOrMore(Tokens.comma and parser { expression })
+        )
+        .map { (first, rest) ->
+            listOf(first) + rest.map { (_, expression) -> expression }
+        }
+
+    val functionCall: Parser<AST.FunctionCall> = (
+            identifier and skip(Tokens.leftParenthesis) and optional(argumentsList) and skip(Tokens.rightParenthesis)
+        )
+        .map { (identifier, arguments) ->
+            AST.FunctionCall(identifier, arguments ?: emptyList())
+        }
+
+    val expression: Parser<AST.Expression> =  functionCall or identifier or constant or nil
 
     val assignment: Parser<AST.Assignment> = (
             identifier and skip(Tokens.equal) and expression
@@ -32,7 +47,7 @@ object Parsers {
             }
         }
 
-    val parameters: Parser<List<AST.Identifier>> = (
+    val parameterList: Parser<List<AST.Identifier>> = (
             identifier and zeroOrMore(Tokens.comma and identifier)
         )
         .map { (first, rest) ->
@@ -43,7 +58,7 @@ object Parsers {
             skip(Tokens.fn) and
             identifier and
             skip(Tokens.leftParenthesis) and
-            optional(parameters) and
+            optional(parameterList) and
             skip(Tokens.rightParenthesis) and
             parser { block }
         )

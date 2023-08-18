@@ -22,4 +22,5 @@ sealed interface AST {
         data class String(val value: kotlin.String): Constant
     }
     data class Identifier(val name: String): Expression
+    data class FunctionCall(val identifier: Identifier, val arguments: List<Expression>): Expression
 }
