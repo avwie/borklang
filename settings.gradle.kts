@@ -12,9 +12,5 @@ pluginManagement {
 }
 
 include(
-    ":common",
-    ":compiler",
-    ":lexer",
-    ":parser",
-    ":vm"
+    ":core",
 )
