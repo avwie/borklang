@@ -11,11 +11,18 @@ class ParserTests {
     fun numbers() {
         val positive = Grammar.parseToEnd("123")
         assertTrue { positive is AST.Constant }
-        assertEquals(123, (positive as AST.Constant).value)
+        assertEquals(123, (positive as AST.Constant.Number).value)
 
         val negative = Grammar.parseToEnd("-123")
         assertTrue { negative is AST.Constant }
-        assertEquals(-123, (negative as AST.Constant).value)
+        assertEquals(-123, (negative as AST.Constant.Number).value)
+    }
+
+    @Test
+    fun strings() {
+        val string = Grammar.parseToEnd("\"hello world\"")
+        assertTrue { string is AST.Constant }
+        assertEquals("hello world", (string as AST.Constant.String).value)
     }
 
     @Test
