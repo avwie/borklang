@@ -36,6 +36,41 @@ class ParserTests {
     }
 
     @Test
+    fun unaryOperations() {
+        val not = Grammar.parseToEnd("!True")
+        assertTrue { not is AST.UnaryOperation }
+        assertEquals(Tokens.not, (not as AST.UnaryOperation).operator)
+        assertTrue { not.expression is AST.Constant.Boolean }
+        assertEquals(true, (not.expression as AST.Constant.Boolean).value)
+    }
+
+    @Test
+    fun binaryOperations() {
+        val plus = Grammar.parseToEnd("1 + 2")
+        assertTrue { plus is AST.BinaryOperation }
+        assertEquals(Tokens.plus, (plus as AST.BinaryOperation).operator)
+        assertTrue { plus.left is AST.Constant.Number }
+        assertEquals(1, (plus.left as AST.Constant.Number).value)
+        assertTrue { plus.right is AST.Constant.Number }
+        assertEquals(2, (plus.right as AST.Constant.Number).value)
+    }
+
+    @Test
+    fun precedence() {
+        val precedence = Grammar.parseToEnd("1 + 2 * 3")
+        assertTrue { precedence is AST.BinaryOperation }
+        assertEquals(Tokens.plus, (precedence as AST.BinaryOperation).operator)
+        assertTrue { precedence.left is AST.Constant.Number }
+        assertEquals(1, (precedence.left as AST.Constant.Number).value)
+        assertTrue { precedence.right is AST.BinaryOperation }
+        assertEquals(Tokens.multiply, (precedence.right as AST.BinaryOperation).operator)
+        assertTrue { (precedence.right as AST.BinaryOperation).left is AST.Constant.Number }
+        assertEquals(2, ((precedence.right as AST.BinaryOperation).left as AST.Constant.Number).value)
+        assertTrue { (precedence.right as AST.BinaryOperation).right is AST.Constant.Number }
+        assertEquals(3, ((precedence.right as AST.BinaryOperation).right as AST.Constant.Number).value)
+    }
+
+    @Test
     fun identifiers() {
         val identifier = Grammar.parseToEnd("hello_world")
         assertTrue { identifier is AST.Identifier }

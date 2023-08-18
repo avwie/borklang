@@ -1,5 +1,7 @@
 package nl.avwie.borklang.parser
 
+import com.github.h0tk3y.betterParse.lexer.Token
+
 sealed interface AST {
     sealed interface Statement : AST
 
@@ -22,6 +24,11 @@ sealed interface AST {
         data class Number(val value: Int): Constant
         data class String(val value: kotlin.String): Constant
     }
+
+    data class UnaryOperation(val operator: Token, val expression: Expression): Expression
+
+    data class BinaryOperation(val left: Expression, val operator: Token, val right: Expression): Expression
+
     data class Identifier(val name: String): Expression
     data class FunctionCall(val identifier: Identifier, val arguments: List<Expression>): Expression
 }

@@ -33,6 +33,10 @@ object Tokens : TokenSetBuilder() {
     val divide by literalToken("/")
     val modulo by literalToken("%")
 
+    val and by literalToken("&&")
+    val or by literalToken("||")
+    val not by literalToken("!")
+
     val doubleEqual by literalToken("==")
     val equal by literalToken("=")
     val lessThan by literalToken("<")
