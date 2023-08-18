@@ -11,6 +11,8 @@ sealed interface AST {
     sealed interface Declaration : Statement {
         data class Variable(val identifier: Identifier, val expression: Expression): Declaration
         data class Constant(val identifier: Identifier, val expression: Expression): Declaration
+
+        data class Function(val identifier: Identifier, val parameters: List<Identifier>, val body: Block): Declaration
     }
 
     sealed interface Expression : Statement

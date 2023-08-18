@@ -18,6 +18,7 @@ object Tokens : TokenSetBuilder() {
 
     val const by literalToken("const")
     val let by literalToken("let")
+    val fn by literalToken("fn")
     val nil by literalToken("Nil")
 
     val number by regexToken("-?\\d+")
