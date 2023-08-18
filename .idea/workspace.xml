@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ef7502dd-7526-4dfe-bc41-35da21010636" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parsers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parsers.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" afterDir="false" />
@@ -92,7 +93,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.bork-lang [jvmTest]">
-    <configuration name="ParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParserTests.chainedAssignments" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/core" />
@@ -105,7 +106,7 @@
           <list>
             <option value=":core:cleanJvmTest" />
             <option value=":core:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests&quot;" />
+            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.chainedAssignments&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -116,7 +117,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="ParserTests.assignment" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParserTests.declarations" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/core" />
@@ -129,7 +130,7 @@
           <list>
             <option value=":core:cleanJvmTest" />
             <option value=":core:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.assignment&quot;" />
+            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.declarations&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -226,10 +227,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.bork-lang [jvmTest]" />
-        <item itemvalue="Gradle.ParserTests.multipleStatements" />
-        <item itemvalue="Gradle.ParserTests.multipleStatements" />
-        <item itemvalue="Gradle.ParserTests.multipleStatements" />
-        <item itemvalue="Gradle.ParserTests.multipleStatements" />
+        <item itemvalue="Gradle.ParserTests.declarations" />
+        <item itemvalue="Gradle.ParserTests.declarations" />
+        <item itemvalue="Gradle.ParserTests.declarations" />
+        <item itemvalue="Gradle.ParserTests.chainedAssignments" />
       </list>
     </recent_temporary>
   </component>
@@ -244,7 +245,7 @@
       <workItem from="1690464852183" duration="1147000" />
       <workItem from="1690466023692" duration="3240000" />
       <workItem from="1690470892322" duration="2387000" />
-      <workItem from="1692350484920" duration="7068000" />
+      <workItem from="1692350484920" duration="9030000" />
     </task>
     <servers />
   </component>

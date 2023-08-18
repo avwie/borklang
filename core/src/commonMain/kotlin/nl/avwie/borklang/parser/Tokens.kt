@@ -16,15 +16,21 @@ object Tokens {
 
     val equal = literalToken("=")
 
+    val const = literalToken("const")
+    val let = literalToken("let")
+
     fun asList() = listOf(
         whitespace,
         newline,
         semicolon,
 
+        const,
+        let,
+
         number,
         string,
         nil,
         identifier,
-        equal
+        equal,
     )
 }

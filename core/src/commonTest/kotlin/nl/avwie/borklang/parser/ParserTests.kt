@@ -58,4 +58,20 @@ class ParserTests {
         assertTrue { program.statements[2] is AST.Assignment }
         assertTrue { program.statements[3] is AST.Assignment }
     }
+
+    @Test
+    fun declarations() {
+        val program = Grammar.parseToEnd("""
+            const x = 123;
+            let y = 456;
+        """.trimIndent())
+        require(program is AST.Program)
+        assertEquals(2, (program).statements.size)
+        assertTrue { program.statements[0] is AST.Declaration.Constant }
+        assertEquals("x", (program.statements[0] as AST.Declaration.Constant).identifier.name)
+        assertEquals(123, ((program.statements[0] as AST.Declaration.Constant).expression as AST.Constant.Number).value)
+        assertTrue { program.statements[1] is AST.Declaration.Variable }
+        assertEquals("y", (program.statements[1] as AST.Declaration.Variable).identifier.name)
+        assertEquals(456, ((program.statements[1] as AST.Declaration.Variable).expression as AST.Constant.Number).value)
+    }
 }

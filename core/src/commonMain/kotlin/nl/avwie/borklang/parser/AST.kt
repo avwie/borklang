@@ -2,7 +2,15 @@ package nl.avwie.borklang.parser
 
 sealed interface AST {
     sealed interface Statement : AST
+
     data class Program(val statements: List<Statement>): AST
+    data class Assignment(val identifier: Identifier, val expression: Expression): Statement
+
+    sealed interface Declaration : Statement {
+        data class Variable(val identifier: Identifier, val expression: Expression): Declaration
+        data class Constant(val identifier: Identifier, val expression: Expression): Declaration
+    }
+
     sealed interface Expression : Statement
     data object Nil : Expression
     sealed interface Constant : Expression {
@@ -10,6 +18,4 @@ sealed interface AST {
         data class String(val value: kotlin.String): Constant
     }
     data class Identifier(val name: String): Expression
-
-    data class Assignment(val identifier: Identifier, val expression: Expression): Statement
 }
