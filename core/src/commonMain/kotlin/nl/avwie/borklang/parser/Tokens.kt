@@ -8,8 +8,11 @@ object Tokens {
     val whitespace = regexToken("\\s+", ignore = true)
     val newline = regexToken("[\r\n]+", ignore = true)
     val semicolon = literalToken(";")
+    val comma = literalToken(",")
     val leftBrace = literalToken("{")
     val rightBrace = literalToken("}")
+    val leftParenthesis = literalToken("(")
+    val rightParenthesis = literalToken(")")
 
     val const = literalToken("const")
     val let = literalToken("let")
@@ -36,8 +39,11 @@ object Tokens {
         whitespace,
         newline,
         semicolon,
+        comma,
         leftBrace,
         rightBrace,
+        leftParenthesis,
+        rightParenthesis,
 
         // keywords
         const,
