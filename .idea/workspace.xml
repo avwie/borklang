@@ -8,6 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parsers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parsers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/TokensTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/TokensTests.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +93,7 @@
       <recent name="$PROJECT_DIR$/lexer" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.bork-lang [jvmTest]">
+  <component name="RunManager" selected="Gradle.ParserTests.multipleStatements">
     <configuration name="ParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -115,7 +118,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="ParserTests.identifiers" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParserTests.assignment" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/core" />
@@ -128,7 +131,7 @@
           <list>
             <option value=":core:cleanJvmTest" />
             <option value=":core:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.identifiers&quot;" />
+            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.assignment&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -139,7 +142,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TokensTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParserTests.multipleStatements" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/core" />
@@ -152,7 +155,7 @@
           <list>
             <option value=":core:cleanJvmTest" />
             <option value=":core:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.parser.TokensTests&quot;" />
+            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.multipleStatements&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -163,7 +166,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TokensTests.stringsAndIdentifiers" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParserTests.numbers" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/core" />
@@ -176,7 +179,7 @@
           <list>
             <option value=":core:cleanJvmTest" />
             <option value=":core:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.parser.TokensTests.stringsAndIdentifiers&quot;" />
+            <option value="--tests &quot;nl.avwie.borklang.parser.ParserTests.numbers&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -224,11 +227,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.bork-lang [jvmTest]" />
-        <item itemvalue="Gradle.ParserTests.identifiers" />
-        <item itemvalue="Gradle.ParserTests" />
-        <item itemvalue="Gradle.TokensTests.stringsAndIdentifiers" />
-        <item itemvalue="Gradle.TokensTests" />
+        <item itemvalue="Gradle.ParserTests.multipleStatements" />
+        <item itemvalue="Gradle.ParserTests.multipleStatements" />
+        <item itemvalue="Gradle.ParserTests.multipleStatements" />
+        <item itemvalue="Gradle.ParserTests.multipleStatements" />
+        <item itemvalue="Gradle.ParserTests.multipleStatements" />
       </list>
     </recent_temporary>
   </component>
@@ -243,7 +246,7 @@
       <workItem from="1690464852183" duration="1147000" />
       <workItem from="1690466023692" duration="3240000" />
       <workItem from="1690470892322" duration="2387000" />
-      <workItem from="1692350484920" duration="4769000" />
+      <workItem from="1692350484920" duration="5973000" />
     </task>
     <servers />
   </component>

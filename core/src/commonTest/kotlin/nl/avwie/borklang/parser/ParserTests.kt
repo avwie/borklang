@@ -1,7 +1,6 @@
 package nl.avwie.borklang.parser
 
 import com.github.h0tk3y.betterParse.grammar.parseToEnd
-import com.github.h0tk3y.betterParse.parser.parseToEnd
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -30,5 +29,31 @@ class ParserTests {
         val identifier = Grammar.parseToEnd("hello_world")
         assertTrue { identifier is AST.Identifier }
         assertEquals("hello_world", (identifier as AST.Identifier).name)
+    }
+
+    @Test
+    fun nil() {
+        val nil = Grammar.parseToEnd("Nil")
+        assertTrue { nil is AST.Nil }
+    }
+
+    @Test
+    fun assignment() {
+        val assignment = Grammar.parseToEnd("x = 123")
+        assertTrue { assignment is AST.Assignment }
+        require(assignment is AST.Assignment)
+        assertEquals("x", assignment.identifier.name)
+        assertTrue { assignment.expression is AST.Constant }
+        assertEquals(123, (assignment.expression as AST.Constant.Number).value)
+    }
+
+    @Test
+    fun multipleStatements() {
+        val program = Grammar.parseToEnd("x = 123\ny = 456")
+        assertTrue { program is AST.Program }
+        require(program is AST.Program)
+        assertEquals(2, program.statements.size)
+        assertTrue { program.statements[0] is AST.Assignment }
+        assertTrue { program.statements[1] is AST.Assignment }
     }
 }

@@ -36,4 +36,15 @@ class TokensTests {
         assertEquals(Tokens.identifier, matches[0].type)
         assertEquals("hello_world", matches[0].text)
     }
+
+    @Test
+    fun nil() {
+        val matches = tokenizer.tokenize("Nil some_identifier").toList()
+        assertEquals(3, matches.size)
+        assertEquals(Tokens.nil, matches[0].type)
+        assertEquals("Nil", matches[0].text)
+
+        assertEquals(Tokens.whitespace, matches[1].type)
+        assertEquals(Tokens.identifier, matches[2].type)
+    }
 }
