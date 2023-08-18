@@ -15,28 +15,58 @@ object Parsers {
     val identifier: Parser<AST.Identifier> = Tokens.identifier.use { AST.Identifier(text) }
     val expression: Parser<AST.Expression> =  identifier or constant or nil
 
-    val assignment: Parser<AST.Assignment> = (identifier and skip(Tokens.equal) and expression).map { (identifier, expression) -> AST.Assignment(identifier, expression) }
-
-    val valueDeclaration: Parser<AST.Declaration> = ((Tokens.const or Tokens.let) and assignment).map { (token, assignment) ->
-        when (token.type) {
-            Tokens.const -> AST.Declaration.Constant(assignment.identifier, assignment.expression)
-            Tokens.let -> AST.Declaration.Variable(assignment.identifier, assignment.expression)
-            else -> throw IllegalStateException("Unknown declaration type: ${token.type}")
+    val assignment: Parser<AST.Assignment> = (
+            identifier and skip(Tokens.equal) and expression
+        ).map { (identifier, expression) ->
+            AST.Assignment(identifier, expression)
         }
-    }
 
-    val parameters: Parser<List<AST.Identifier>> = (identifier and zeroOrMore(Tokens.comma and identifier)).map { (first, rest) ->
-        listOf(first) + rest.map { (_, identifier) -> identifier }
-    }
+    val valueDeclaration: Parser<AST.Declaration> = (
+            (Tokens.const or Tokens.let) and assignment
+        )
+        .map { (token, assignment) ->
+            when (token.type) {
+                Tokens.const -> AST.Declaration.Constant(assignment.identifier, assignment.expression)
+                Tokens.let -> AST.Declaration.Variable(assignment.identifier, assignment.expression)
+                else -> throw IllegalStateException("Unknown declaration type: ${token.type}")
+            }
+        }
 
-    val functionDeclaration: Parser<AST.Declaration.Function> = (skip(Tokens.fn) and identifier and skip(Tokens.leftParenthesis) and optional(parameters) and skip(Tokens.rightParenthesis) and parser { block }).map { (identifier, parameters, block) ->
+    val parameters: Parser<List<AST.Identifier>> = (
+            identifier and zeroOrMore(Tokens.comma and identifier)
+        )
+        .map { (first, rest) ->
+            listOf(first) + rest.map { (_, identifier) -> identifier }
+        }
+
+    val functionDeclaration: Parser<AST.Declaration.Function> = (
+            skip(Tokens.fn) and
+            identifier and
+            skip(Tokens.leftParenthesis) and
+            optional(parameters) and
+            skip(Tokens.rightParenthesis) and
+            parser { block }
+        )
+        .map { (identifier, parameters, block) ->
             AST.Declaration.Function(identifier, parameters ?: emptyList(), block)
-    }
+        }
 
     val declaration = functionDeclaration or valueDeclaration
 
-    val block: Parser<AST.Block> = skip(Tokens.leftBrace) and oneOrMore(parser { statement }) and skip(Tokens.rightBrace) map { AST.Block(it) }
-    val statement: Parser<AST.Statement> = (block or declaration or assignment or expression) and skip(zeroOrMore(Tokens.newline or Tokens.semicolon))
+    val block: Parser<AST.Block> = (
+            skip(Tokens.leftBrace) and
+            oneOrMore(parser { statement }) and
+            skip(Tokens.rightBrace)
+        )
+        .map { statements ->  AST.Block(statements) }
+
+    val statement: Parser<AST.Statement> = (
+            block or
+            declaration or
+            assignment or
+            expression
+        ) and skip(zeroOrMore(Tokens.newline or Tokens.semicolon))
+
     val program: Parser<AST> = oneOrMore(statement).map { statements ->
         if (statements.size == 1) statements[0] else AST.Program(statements)
     }
