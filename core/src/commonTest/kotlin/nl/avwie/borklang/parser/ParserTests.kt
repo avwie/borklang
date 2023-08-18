@@ -49,11 +49,13 @@ class ParserTests {
 
     @Test
     fun multipleStatements() {
-        val program = Grammar.parseToEnd("x = 123\ny = 456")
+        val program = Grammar.parseToEnd("x = 123\ny = 456; z = \"Foobar\";;;\n;;foo=bar")
         assertTrue { program is AST.Program }
         require(program is AST.Program)
-        assertEquals(2, program.statements.size)
+        assertEquals(4, program.statements.size)
         assertTrue { program.statements[0] is AST.Assignment }
         assertTrue { program.statements[1] is AST.Assignment }
+        assertTrue { program.statements[2] is AST.Assignment }
+        assertTrue { program.statements[3] is AST.Assignment }
     }
 }

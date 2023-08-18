@@ -7,6 +7,7 @@ object Tokens {
 
     val whitespace = regexToken("\\s+", ignore = true)
     val newline = regexToken("[\r\n]+", ignore = true)
+    val semicolon = literalToken(";")
 
     val number = regexToken("-?\\d+")
     val string = regexToken("\"[^\"]*\"")
@@ -18,6 +19,7 @@ object Tokens {
     fun asList() = listOf(
         whitespace,
         newline,
+        semicolon,
 
         number,
         string,
