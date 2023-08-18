@@ -47,4 +47,14 @@ class TokensTests {
         assertEquals(Tokens.whitespace, matches[1].type)
         assertEquals(Tokens.identifier, matches[2].type)
     }
+
+    @Test
+    fun equalAndDoubleEqual() {
+        val matches = tokenizer.tokenize("== =").toList()
+        assertEquals(3, matches.size)
+        assertEquals(Tokens.doubleEqual, matches[0].type)
+        assertEquals("==", matches[0].text)
+        assertEquals(Tokens.equal, matches[2].type)
+        assertEquals("=", matches[2].text)
+    }
 }

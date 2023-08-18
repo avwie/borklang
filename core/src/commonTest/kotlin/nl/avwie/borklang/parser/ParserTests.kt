@@ -60,7 +60,7 @@ class ParserTests {
     }
 
     @Test
-    fun declarations() {
+    fun valueDeclarations() {
         val program = Grammar.parseToEnd("""
             const x = 123;
             let y = 456;
