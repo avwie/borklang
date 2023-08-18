@@ -13,7 +13,8 @@ object Parsers {
 
     val identifier: Parser<AST.Identifier> = Tokens.identifier.use { AST.Identifier(text) }
 
-    val program: Parser<AST> = constant or identifier
+    val expression: Parser<AST.Expression> = identifier or constant
+    val program: Parser<AST> = expression
 }
 
 object Grammar : Grammar<AST>() {
