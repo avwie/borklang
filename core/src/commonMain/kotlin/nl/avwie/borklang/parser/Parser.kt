@@ -5,9 +5,6 @@ import com.github.h0tk3y.betterParse.grammar.Grammar
 import com.github.h0tk3y.betterParse.lexer.regexToken
 import com.github.h0tk3y.betterParse.parser.Parser
 
-sealed interface AST {
-    data class Constant(val value: Int): AST
-}
 
 object Grammar : Grammar<AST>() {
 

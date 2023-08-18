@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7502dd-7526-4dfe-bc41-35da21010636" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parser.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/TokensTests.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/compiler/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Lexer.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Scanner.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/src/commonMain/kotlin/nl/avwie/borklang/lexer/Token.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/src/commonTest/kotlin/nl/avwie/borklang/lexer/LexerImplTests.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vm/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Parser.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +86,7 @@
       <recent name="$PROJECT_DIR$/lexer" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ParserTests">
+  <component name="RunManager" selected="Gradle.TokensTests.numbers">
     <configuration name="LexerImplTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -111,30 +101,6 @@
             <option value=":lexer:cleanJvmTest" />
             <option value=":lexer:jvmTest" />
             <option value="--tests &quot;nl.avwie.borklang.lexer.LexerImplTests&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="LexerImplTests.operators" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/lexer" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":lexer:cleanJvmTest" />
-            <option value=":lexer:jvmTest" />
-            <option value="--tests &quot;nl.avwie.borklang.lexer.LexerImplTests.operators&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -217,6 +183,30 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="TokensTests.numbers" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/core" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":core:cleanJvmTest" />
+            <option value=":core:jvmTest" />
+            <option value="--tests &quot;nl.avwie.borklang.parser.TokensTests.numbers&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="bork" />
       <method v="2">
@@ -232,11 +222,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ParserTests" />
-        <item itemvalue="Gradle.ParserTests.number" />
-        <item itemvalue="Gradle.ParserTests.number" />
-        <item itemvalue="Gradle.LexerImplTests" />
-        <item itemvalue="Gradle.LexerImplTests.operators" />
+        <item itemvalue="Gradle.TokensTests.numbers" />
+        <item itemvalue="Gradle.TokensTests.numbers" />
+        <item itemvalue="Gradle.TokensTests.numbers" />
+        <item itemvalue="Gradle.TokensTests.numbers" />
+        <item itemvalue="Gradle.TokensTests.numbers" />
       </list>
     </recent_temporary>
   </component>
@@ -251,7 +241,7 @@
       <workItem from="1690464852183" duration="1147000" />
       <workItem from="1690466023692" duration="3240000" />
       <workItem from="1690470892322" duration="2387000" />
-      <workItem from="1692350484920" duration="1628000" />
+      <workItem from="1692350484920" duration="2955000" />
     </task>
     <servers />
   </component>
