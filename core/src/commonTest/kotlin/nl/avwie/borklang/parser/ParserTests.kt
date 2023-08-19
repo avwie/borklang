@@ -71,6 +71,30 @@ class ParserTests {
     }
 
     @Test
+    fun precedence2() {
+        val precedence = Grammar.parseToEnd("1 * 2 + 3 / 4 < 5 * 6 / 7 + 8")
+        require(precedence is AST.BinaryOperation)
+        assertEquals(Tokens.lessThan, precedence.operator)
+
+        val left = precedence.left as AST.BinaryOperation
+        assertEquals(Tokens.plus, left.operator)
+        val leftLeft = left.left as AST.BinaryOperation
+        assertEquals(Tokens.multiply, leftLeft.operator)
+
+        val leftRight = left.right as AST.BinaryOperation
+        assertEquals(Tokens.divide, leftRight.operator)
+
+        val right = precedence.right as AST.BinaryOperation
+        assertEquals(Tokens.plus, right.operator)
+        val rightLeft = right.left as AST.BinaryOperation
+        assertEquals(Tokens.divide, rightLeft.operator)
+        rightLeft.right as AST.Constant.Number
+        val rightLeftLeft = rightLeft.left as AST.BinaryOperation
+        assertEquals(Tokens.multiply, rightLeftLeft.operator)
+    }
+
+
+    @Test
     fun identifiers() {
         val identifier = Grammar.parseToEnd("hello_world")
         assertTrue { identifier is AST.Identifier }
