@@ -34,7 +34,7 @@ class Scope(
 
     fun hasConstant(name: String, checkParent: Boolean): Boolean = constants.containsKey(name) || (checkParent && parent?.hasConstant(name, checkParent) ?: false)
 
-    fun getConstant(name: String): Any? = constants[name] ?: parent?.getConstant(name)
+    fun getConstant(name: String): Any? = constants[name] ?: parent?.getConstant(name) ?: AST.Nil
 
     fun declareVariable(name: String, value: Any?) {
         if (hasConstant(name, checkParent = false)) throw IllegalStateException("Cannot declare variable $name, constant with same name exists")
@@ -45,7 +45,7 @@ class Scope(
     fun hasVariable(name: String, checkParent: Boolean): Boolean = variables.containsKey(name) || (checkParent && parent?.hasVariable(name, checkParent) ?: false)
 
     fun getVariable(name: String): Any? {
-        return variables[name] ?: parent?.getVariable(name)
+        return variables[name] ?: parent?.getVariable(name) ?: getConstant(name) ?: AST.Nil
     }
 
     fun setVariable(name: String, value: Any?) {
@@ -72,7 +72,7 @@ class Scope(
 
     companion object {
         fun default(
-            stdOut: (Any?) -> Unit = { println(it) },
+            stdOut: (Any?) -> AST.Nil = { println(it); AST.Nil },
         ): Scope = Scope().apply {
             declareNativeFunction("print", listOf("value")) {
                 stdOut(getVariable("value"))

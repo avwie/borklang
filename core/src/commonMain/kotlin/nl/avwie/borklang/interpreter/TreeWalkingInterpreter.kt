@@ -15,7 +15,7 @@ class TreeWalkingInterpreter(
     }
 
     private fun program(program: AST.Program): Any? {
-        var result: Any? = Unit
+        var result: Any? = AST.Nil
         program.statements.forEach { statement ->
             result = statement(statement)
         }
@@ -54,7 +54,7 @@ class TreeWalkingInterpreter(
 
     private fun AST.Declaration.Function.function(): Any? {
         scope.declareFunction(identifier.name, this)
-        return Unit
+        return AST.Nil
     }
 
     private fun expression(expression: AST.Expression): Any? = when (expression) {
@@ -94,7 +94,7 @@ class TreeWalkingInterpreter(
 
     private fun block(block: AST.Block): Any? {
        return  scoped {
-           var result: Any? = Unit
+           var result: Any? = AST.Nil
            block.statements.forEach { statement ->
                result = statement(statement)
                if (statement is AST.Control.Return) {
@@ -141,20 +141,22 @@ class TreeWalkingInterpreter(
 
     private fun functionCall(functionCall: AST.FunctionCall): Any? {
         val function = scope.getFunction(functionCall.identifier.name)
+            ?: throw IllegalStateException("Function ${functionCall.identifier.name} is not declared")
+
         val arguments = functionCall.arguments.map { expression(it) }
-        return when (function) {
-            is Scope.Function.Native -> function.block.invoke(scope)
-            is Scope.Function.UserDefined -> {
-                scoped {
-                    function.parameters.zip(arguments).forEach { (parameter, argument) ->
-                        scope.declareVariable(parameter, argument)
-                    }
+        return scoped {
+
+            function.parameters.zip(arguments).forEach { (parameter, argument) ->
+                scope.declareVariable(parameter, argument)
+            }
+
+            when (function) {
+                is Scope.Function.Native -> function.block.invoke(scope)
+                is Scope.Function.UserDefined -> {
                     val result = expression(function.body)
                     result
                 }
             }
-
-            null -> throw IllegalStateException("Function ${functionCall.identifier.name} is not declared")
         }
     }
 

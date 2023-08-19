@@ -320,4 +320,24 @@ class ParserTests {
         require(statement is AST.Declaration.Variable)
         assertTrue { statement.expression is AST.Block }
     }
+
+    @Test
+    fun blockInFunctionCall() {
+        val program = Grammar.parseToEnd("""
+            fn add(x, y) {
+                return x + y
+            }
+            
+            add(1, {
+                const x = 2;
+                let y = 3;
+                x + y
+            })
+        """.trimIndent())
+
+        require(program is AST.Program)
+        assertEquals(2, (program).statements.size)
+        assertTrue { program.statements[0] is AST.Declaration.Function }
+        assertTrue { program.statements[1] is AST.FunctionCall }
+    }
 }
