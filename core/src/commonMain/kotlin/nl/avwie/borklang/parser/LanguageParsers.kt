@@ -129,7 +129,15 @@ object LanguageParsers {
             AST.Control.If(condition, thenBlock, elseBlock)
         }
 
-    val control: Parser<AST.Control> = ifStatement
+    val returnStatement : Parser<AST.Control.Return> = (
+            skip(Tokens.returnToken) and
+            parser { expression }
+        )
+        .map { expression ->
+            AST.Control.Return(expression)
+        }
+
+    val control: Parser<AST.Control> = ifStatement or returnStatement
 
     val statement: Parser<AST.Statement> = (
             control or

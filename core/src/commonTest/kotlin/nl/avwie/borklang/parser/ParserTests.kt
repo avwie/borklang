@@ -266,9 +266,9 @@ class ParserTests {
         val program = Grammar.parseToEnd("""
             fn fib(n) {
                 if (n < 2) {
-                    n
+                    return n
                 } else {
-                    fib(n - 1) + fib(n - 2)
+                    return fib(n - 1) + fib(n - 2)
                 }
             }
             

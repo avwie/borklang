@@ -20,6 +20,7 @@ sealed interface AST {
     sealed interface Control : Statement {
         data class If(val condition: Expression, val thenBlock: Block, val elseBlock: Block?): Control
         data class While(val condition: Expression, val block: Block): Control
+        data class Return(val expression: Expression): Control
     }
 
     sealed interface Expression : Statement

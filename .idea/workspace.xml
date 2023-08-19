@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/AST.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/LanguageParsers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/LanguageParsers.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonMain/kotlin/nl/avwie/borklang/parser/Tokens.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/commonTest/kotlin/nl/avwie/borklang/parser/ParserTests.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,9 +226,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.ParserTests.fibonacci" />
-        <item itemvalue="Gradle.ParserTests.ifStatement" />
         <item itemvalue="Gradle.bork-lang [jvmTest]" />
-        <item itemvalue="Gradle.ParserTests.precedence2" />
+        <item itemvalue="Gradle.ParserTests.fibonacci" />
+        <item itemvalue="Gradle.ParserTests.ifStatement" />
         <item itemvalue="Gradle.ParserTests.precedence2" />
       </list>
     </recent_temporary>
@@ -245,7 +244,7 @@
       <workItem from="1690464852183" duration="1147000" />
       <workItem from="1690466023692" duration="3240000" />
       <workItem from="1690470892322" duration="2387000" />
-      <workItem from="1692350484920" duration="15519000" />
+      <workItem from="1692350484920" duration="15773000" />
     </task>
     <servers />
   </component>
