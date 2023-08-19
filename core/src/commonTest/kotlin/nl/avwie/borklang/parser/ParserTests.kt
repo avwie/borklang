@@ -256,9 +256,19 @@ class ParserTests {
         assertTrue { statement is AST.Control.If }
         assertTrue { (statement as AST.Control.If).condition is AST.Constant.Boolean }
         assertEquals(true, ((statement as AST.Control.If).condition as AST.Constant.Boolean).value)
-        assertEquals(1, statement.thenBlock.statements.size)
+        assertEquals(1, (statement.thenBlock as AST.Block).statements.size)
         assertTrue { statement.elseBlock is AST.Block }
         assertEquals(1, (statement.elseBlock as AST.Block).statements.size)
+    }
+
+    @Test
+    fun shortHandIf() {
+        val statement = Grammar.parseToEnd("if (True) foo() else 1234")
+        assertTrue { statement is AST.Control.If }
+        assertTrue { (statement as AST.Control.If).condition is AST.Constant.Boolean }
+        assertEquals(true, ((statement as AST.Control.If).condition as AST.Constant.Boolean).value)
+        assertTrue { statement.thenBlock is AST.FunctionCall }
+        assertTrue { statement.elseBlock is AST.Constant.Number }
     }
 
     @Test
@@ -282,5 +292,21 @@ class ParserTests {
         assertEquals(1, (program.statements[1] as AST.FunctionCall).arguments.size)
         assertTrue { (program.statements[1] as AST.FunctionCall).arguments[0] is AST.Constant.Number }
         assertEquals(10, ((program.statements[1] as AST.FunctionCall).arguments[0] as AST.Constant.Number).value)
+    }
+
+    @Test
+    fun ifExpression() {
+        val statement = Grammar.parseToEnd("let x = if (True) { 123 } else { 456 }")
+        assertTrue { statement is AST.Declaration.Variable }
+        require(statement is AST.Declaration.Variable)
+        assertTrue { statement.expression is AST.Control.If }
+    }
+
+    @Test
+    fun blockExpression() {
+        val statement = Grammar.parseToEnd("let x = { 123; 456; 789 }")
+        assertTrue { statement is AST.Declaration.Variable }
+        require(statement is AST.Declaration.Variable)
+        assertTrue { statement.expression is AST.Block }
     }
 }

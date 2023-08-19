@@ -5,9 +5,10 @@ import com.github.h0tk3y.betterParse.lexer.Token
 sealed interface AST {
     sealed interface Statement : AST
 
+    sealed interface Expression : Statement
+
     data class Program(val statements: List<Statement>): AST
 
-    data class Block(val statements: List<Statement>): Statement
     data class Assignment(val identifier: Identifier, val expression: Expression): Statement
 
     sealed interface Declaration : Statement {
@@ -17,14 +18,12 @@ sealed interface AST {
         data class Function(val identifier: Identifier, val parameters: List<Identifier>, val body: Block): Declaration
     }
 
-    sealed interface Control : Statement {
-        data class If(val condition: Expression, val thenBlock: Block, val elseBlock: Block?): Control
-        data class While(val condition: Expression, val block: Block): Control
+    sealed interface Control : Expression {
+        data class If(val condition: Expression, val thenBlock: Expression, val elseBlock: Expression?): Control
         data class Return(val expression: Expression): Control
     }
-
-    sealed interface Expression : Statement
     data object Nil : Expression
+    data class Block(val statements: List<Statement>): Expression
     sealed interface Constant : Expression {
         data class Boolean(val value: kotlin.Boolean): Constant
         data class Number(val value: Int): Constant

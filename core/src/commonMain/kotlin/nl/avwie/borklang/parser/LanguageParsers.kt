@@ -70,10 +70,8 @@ object LanguageParsers {
 
     val identifier = ExpressionParsers.identifier
 
-    val expression = ExpressionParsers.expression
-
     val assignment: Parser<AST.Assignment> = (
-            identifier and skip(Tokens.equal) and expression
+            identifier and skip(Tokens.equal) and parser { expression }
         ).map { (identifier, expression) ->
             AST.Assignment(identifier, expression)
         }
@@ -122,8 +120,8 @@ object LanguageParsers {
             skip(Tokens.leftParenthesis) and
             parser { expression } and
             skip(Tokens.rightParenthesis) and
-            block and
-            optional(skip(Tokens.elseToken) and block)
+            parser { expression } and
+            optional(skip(Tokens.elseToken) and parser { expression })
         )
         .map { (condition, thenBlock, elseBlock) ->
             AST.Control.If(condition, thenBlock, elseBlock)
@@ -139,9 +137,9 @@ object LanguageParsers {
 
     val control: Parser<AST.Control> = ifStatement or returnStatement
 
+    val expression = ExpressionParsers.expression or control or block
+
     val statement: Parser<AST.Statement> = (
-            control or
-            block or
             declaration or
             assignment or
             expression
