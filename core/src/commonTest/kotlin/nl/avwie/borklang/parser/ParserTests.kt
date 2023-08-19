@@ -1,6 +1,8 @@
 package nl.avwie.borklang.parser
 
 import com.github.h0tk3y.betterParse.grammar.parseToEnd
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -39,7 +41,7 @@ class ParserTests {
     fun unaryOperations() {
         val not = Grammar.parseToEnd("!True")
         assertTrue { not is AST.UnaryOperation }
-        assertEquals(Tokens.not, (not as AST.UnaryOperation).operator)
+        assertEquals(Tokens.not.name, (not as AST.UnaryOperation).operator)
         assertTrue { not.expression is AST.Constant.Boolean }
         assertEquals(true, (not.expression as AST.Constant.Boolean).value)
     }
@@ -48,7 +50,7 @@ class ParserTests {
     fun binaryOperations() {
         val plus = Grammar.parseToEnd("1 + 2")
         assertTrue { plus is AST.BinaryOperation }
-        assertEquals(Tokens.plus, (plus as AST.BinaryOperation).operator)
+        assertEquals(Tokens.plus.name, (plus as AST.BinaryOperation).operator)
         assertTrue { plus.left is AST.Constant.Number }
         assertEquals(1, (plus.left as AST.Constant.Number).value)
         assertTrue { plus.right is AST.Constant.Number }
@@ -60,21 +62,21 @@ class ParserTests {
         val equals = Grammar.parseToEnd("1 == 2")
         val unequal = Grammar.parseToEnd("1 != 2")
         assertTrue { equals is AST.BinaryOperation }
-        assertEquals(Tokens.doubleEqual, (equals as AST.BinaryOperation).operator)
+        assertEquals(Tokens.doubleEqual.name, (equals as AST.BinaryOperation).operator)
 
         assertTrue { unequal is AST.BinaryOperation }
-        assertEquals(Tokens.notEqual, (unequal as AST.BinaryOperation).operator)
+        assertEquals(Tokens.notEqual.name, (unequal as AST.BinaryOperation).operator)
     }
 
     @Test
     fun precedence() {
         val precedence = Grammar.parseToEnd("1 + 2 * 3")
         assertTrue { precedence is AST.BinaryOperation }
-        assertEquals(Tokens.plus, (precedence as AST.BinaryOperation).operator)
+        assertEquals(Tokens.plus.name, (precedence as AST.BinaryOperation).operator)
         assertTrue { precedence.left is AST.Constant.Number }
         assertEquals(1, (precedence.left as AST.Constant.Number).value)
         assertTrue { precedence.right is AST.BinaryOperation }
-        assertEquals(Tokens.multiply, (precedence.right as AST.BinaryOperation).operator)
+        assertEquals(Tokens.multiply.name, (precedence.right as AST.BinaryOperation).operator)
         assertTrue { (precedence.right as AST.BinaryOperation).left is AST.Constant.Number }
         assertEquals(2, ((precedence.right as AST.BinaryOperation).left as AST.Constant.Number).value)
         assertTrue { (precedence.right as AST.BinaryOperation).right is AST.Constant.Number }
@@ -85,23 +87,23 @@ class ParserTests {
     fun precedence2() {
         val precedence = Grammar.parseToEnd("1 * 2 + 3 / 4 < 5 * 6 / 7 + 8")
         require(precedence is AST.BinaryOperation)
-        assertEquals(Tokens.lessThan, precedence.operator)
+        assertEquals(Tokens.lessThan.name, precedence.operator)
 
         val left = precedence.left as AST.BinaryOperation
-        assertEquals(Tokens.plus, left.operator)
+        assertEquals(Tokens.plus.name, left.operator)
         val leftLeft = left.left as AST.BinaryOperation
-        assertEquals(Tokens.multiply, leftLeft.operator)
+        assertEquals(Tokens.multiply.name, leftLeft.operator)
 
         val leftRight = left.right as AST.BinaryOperation
-        assertEquals(Tokens.divide, leftRight.operator)
+        assertEquals(Tokens.divide.name, leftRight.operator)
 
         val right = precedence.right as AST.BinaryOperation
-        assertEquals(Tokens.plus, right.operator)
+        assertEquals(Tokens.plus.name, right.operator)
         val rightLeft = right.left as AST.BinaryOperation
-        assertEquals(Tokens.divide, rightLeft.operator)
+        assertEquals(Tokens.divide.name, rightLeft.operator)
         rightLeft.right as AST.Constant.Number
         val rightLeftLeft = rightLeft.left as AST.BinaryOperation
-        assertEquals(Tokens.multiply, rightLeftLeft.operator)
+        assertEquals(Tokens.multiply.name, rightLeftLeft.operator)
     }
 
 
@@ -339,5 +341,29 @@ class ParserTests {
         assertEquals(2, (program).statements.size)
         assertTrue { program.statements[0] is AST.Declaration.Function }
         assertTrue { program.statements[1] is AST.FunctionCall }
+    }
+
+    @Test
+    fun serialization() {
+        val program = Grammar.parseToEnd("""
+            fn fib(n) {
+                if (n < 2) {
+                    return n
+                } else {
+                    return fib(n - 1) + fib(n - 2)
+                }
+            }
+            
+            fib(10)
+        """.trimIndent())
+
+        require(program is AST.Program)
+        val serializer = Json {
+            prettyPrint = true
+        }
+
+        val serialized = serializer.encodeToString(program)
+        val deserialized = serializer.decodeFromString(AST.Program.serializer(), serialized)
+        assertEquals(program, deserialized)
     }
 }

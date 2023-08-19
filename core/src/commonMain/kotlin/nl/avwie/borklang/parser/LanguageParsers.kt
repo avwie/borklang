@@ -34,7 +34,7 @@ object LanguageParsers {
             Tokens.not and parser { expression }
             )
         .map { (_, expression) ->
-            AST.UnaryOperation(Tokens.not, expression)
+            AST.UnaryOperation(Tokens.not.name!!, expression)
         }
 
     val parenthesesTerm: Parser<AST.Expression> = (
@@ -46,23 +46,23 @@ object LanguageParsers {
     val term: Parser<AST.Expression> = notTerm or primary
 
     val multiplyDivide: Parser<AST.Expression> = leftAssociative(term, Tokens.multiply or Tokens.divide or Tokens.modulo) { left, op, right ->
-        AST.BinaryOperation(left, op.type, right)
+        AST.BinaryOperation(left, op.type.name!!, right)
     }
 
     val plusMinus: Parser<AST.Expression> = leftAssociative(multiplyDivide, Tokens.plus or Tokens.minus) { left, op, right ->
-        AST.BinaryOperation(left, op.type, right)
+        AST.BinaryOperation(left, op.type.name!!, right)
     }
 
     val comparison: Parser<AST.Expression> = leftAssociative(plusMinus, Tokens.notEqual or Tokens.doubleEqual or Tokens.lessThan or Tokens.lessThanOrEqual or Tokens.greaterThan or Tokens.greaterThanOrEqual) { left, op, right ->
-        AST.BinaryOperation(left, op.type, right)
+        AST.BinaryOperation(left, op.type.name!!, right)
     }
 
     val and: Parser<AST.Expression> = leftAssociative(comparison, Tokens.and) { left, op, right ->
-        AST.BinaryOperation(left, op.type, right)
+        AST.BinaryOperation(left, op.type.name!!, right)
     }
 
     val or: Parser<AST.Expression> = leftAssociative(and, Tokens.or) { left, op, right ->
-        AST.BinaryOperation(left, op.type, right)
+        AST.BinaryOperation(left, op.type.name!!, right)
     }
 
     val arithmatic = or

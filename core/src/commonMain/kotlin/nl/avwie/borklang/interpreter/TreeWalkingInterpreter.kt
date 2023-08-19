@@ -108,8 +108,8 @@ class TreeWalkingInterpreter(
     private fun unaryOperation(unaryOperation: AST.UnaryOperation): Any? {
         val value = expression(unaryOperation.expression)
         return when (unaryOperation.operator) {
-            Tokens.minus -> -(value as Int)
-            Tokens.not -> !(value as Boolean)
+            Tokens.minus.name-> -(value as Int)
+            Tokens.not.name -> !(value as Boolean)
             else -> throw IllegalStateException("Unknown unary operator: ${unaryOperation.operator}")
         }
     }
@@ -118,19 +118,19 @@ class TreeWalkingInterpreter(
         val left = expression(binaryOperation.left)
         val right = expression(binaryOperation.right)
         return when (binaryOperation.operator) {
-            Tokens.plus -> (left as Int) + (right as Int)
-            Tokens.minus -> (left as Int) - (right as Int)
-            Tokens.multiply -> (left as Int) * (right as Int)
-            Tokens.divide -> (left as Int) / (right as Int)
-            Tokens.modulo -> (left as Int) % (right as Int)
-            Tokens.and -> (left as Boolean) && (right as Boolean)
-            Tokens.or -> (left as Boolean) || (right as Boolean)
-            Tokens.doubleEqual -> left == right
-            Tokens.notEqual -> left != right
-            Tokens.lessThan -> (left as Int) < (right as Int)
-            Tokens.lessThanOrEqual -> (left as Int) <= (right as Int)
-            Tokens.greaterThan -> (left as Int) > (right as Int)
-            Tokens.greaterThanOrEqual -> (left as Int) >= (right as Int)
+            Tokens.plus.name -> (left as Int) + (right as Int)
+            Tokens.minus.name -> (left as Int) - (right as Int)
+            Tokens.multiply.name -> (left as Int) * (right as Int)
+            Tokens.divide.name -> (left as Int) / (right as Int)
+            Tokens.modulo.name -> (left as Int) % (right as Int)
+            Tokens.and.name -> (left as Boolean) && (right as Boolean)
+            Tokens.or.name -> (left as Boolean) || (right as Boolean)
+            Tokens.doubleEqual.name -> left == right
+            Tokens.notEqual.name -> left != right
+            Tokens.lessThan.name -> (left as Int) < (right as Int)
+            Tokens.lessThanOrEqual.name -> (left as Int) <= (right as Int)
+            Tokens.greaterThan.name -> (left as Int) > (right as Int)
+            Tokens.greaterThanOrEqual.name -> (left as Int) >= (right as Int)
             else -> throw IllegalStateException("Unknown binary operator: ${binaryOperation.operator}")
         }
     }

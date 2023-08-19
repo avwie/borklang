@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
 }
 
 kotlin {
@@ -12,7 +13,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api("com.github.h0tk3y.betterParse:better-parse:0.4.4")
+                api(libs.betterParse)
+                api(libs.jetbrains.serialization.json)
             }
         }
 

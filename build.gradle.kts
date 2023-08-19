@@ -14,4 +14,7 @@ allprojects {
 plugins {
     @Suppress("DSL_SCOPE_VIOLATION")
     kotlin("multiplatform").version(libs.versions.jetbrains.kotlin).apply(false)
+
+    @Suppress("DSL_SCOPE_VIOLATION")
+    kotlin("plugin.serialization").version(libs.versions.jetbrains.kotlin).apply(false)
 }
