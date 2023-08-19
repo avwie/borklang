@@ -20,6 +20,9 @@ object Tokens : TokenSetBuilder() {
     val let by literalToken("let")
     val fn by literalToken("fn")
     val nil by literalToken("Nil")
+    val ifToken by literalToken("if")
+    val elseToken by literalToken("else")
+    val whileToken by literalToken("while")
     val trueToken by literalToken("True")
     val falseToken by literalToken("False")
 

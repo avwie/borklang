@@ -17,6 +17,11 @@ sealed interface AST {
         data class Function(val identifier: Identifier, val parameters: List<Identifier>, val body: Block): Declaration
     }
 
+    sealed interface Control : Statement {
+        data class If(val condition: Expression, val thenBlock: Block, val elseBlock: Block?): Control
+        data class While(val condition: Expression, val block: Block): Control
+    }
+
     sealed interface Expression : Statement
     data object Nil : Expression
     sealed interface Constant : Expression {

@@ -241,4 +241,46 @@ class ParserTests {
         assertTrue { (statement.arguments[0] as AST.FunctionCall).arguments[0] is AST.Constant.Number }
         assertEquals(123, ((statement.arguments[0] as AST.FunctionCall).arguments[0] as AST.Constant.Number).value)
     }
+
+    @Test
+    fun ifStatement() {
+        val statement = Grammar.parseToEnd("""
+            if (True) {
+                const x = 123;
+            } else {
+                let y = 456;
+            }
+        """.trimIndent())
+
+        require(statement is AST.Statement)
+        assertTrue { statement is AST.Control.If }
+        assertTrue { (statement as AST.Control.If).condition is AST.Constant.Boolean }
+        assertEquals(true, ((statement as AST.Control.If).condition as AST.Constant.Boolean).value)
+        assertEquals(1, statement.thenBlock.statements.size)
+        assertTrue { statement.elseBlock is AST.Block }
+        assertEquals(1, (statement.elseBlock as AST.Block).statements.size)
+    }
+
+    @Test
+    fun fibonacci() {
+        val program = Grammar.parseToEnd("""
+            fn fib(n) {
+                if (n < 2) {
+                    n
+                } else {
+                    fib(n - 1) + fib(n - 2)
+                }
+            }
+            
+            fib(10)
+        """.trimIndent())
+
+        require(program is AST.Program)
+        assertEquals(2, (program).statements.size)
+        assertTrue { program.statements[0] is AST.Declaration.Function }
+        assertTrue { program.statements[1] is AST.FunctionCall }
+        assertEquals(1, (program.statements[1] as AST.FunctionCall).arguments.size)
+        assertTrue { (program.statements[1] as AST.FunctionCall).arguments[0] is AST.Constant.Number }
+        assertEquals(10, ((program.statements[1] as AST.FunctionCall).arguments[0] as AST.Constant.Number).value)
+    }
 }

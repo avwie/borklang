@@ -117,7 +117,22 @@ object LanguageParsers {
         )
         .map { statements ->  AST.Block(statements) }
 
+    val ifStatement : Parser<AST.Control.If> = (
+            skip(Tokens.ifToken) and
+            skip(Tokens.leftParenthesis) and
+            parser { expression } and
+            skip(Tokens.rightParenthesis) and
+            block and
+            optional(skip(Tokens.elseToken) and block)
+        )
+        .map { (condition, thenBlock, elseBlock) ->
+            AST.Control.If(condition, thenBlock, elseBlock)
+        }
+
+    val control: Parser<AST.Control> = ifStatement
+
     val statement: Parser<AST.Statement> = (
+            control or
             block or
             declaration or
             assignment or
