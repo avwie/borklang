@@ -56,6 +56,17 @@ class ParserTests {
     }
 
     @Test
+    fun equality() {
+        val equals = Grammar.parseToEnd("1 == 2")
+        val unequal = Grammar.parseToEnd("1 != 2")
+        assertTrue { equals is AST.BinaryOperation }
+        assertEquals(Tokens.doubleEqual, (equals as AST.BinaryOperation).operator)
+
+        assertTrue { unequal is AST.BinaryOperation }
+        assertEquals(Tokens.notEqual, (unequal as AST.BinaryOperation).operator)
+    }
+
+    @Test
     fun precedence() {
         val precedence = Grammar.parseToEnd("1 + 2 * 3")
         assertTrue { precedence is AST.BinaryOperation }

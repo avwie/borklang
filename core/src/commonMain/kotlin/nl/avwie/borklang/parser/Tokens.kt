@@ -39,14 +39,16 @@ object Tokens : TokenSetBuilder() {
 
     val and by literalToken("&&")
     val or by literalToken("||")
-    val not by literalToken("!")
 
     val doubleEqual by literalToken("==")
+    val notEqual by literalToken("!=")
     val equal by literalToken("=")
     val lessThan by literalToken("<")
     val lessThanOrEqual by literalToken("<=")
     val greaterThan by literalToken(">")
     val greaterThanOrEqual by literalToken(">=")
+
+    val not by literalToken("!")
 }
 
 abstract class TokenSetBuilder(

@@ -51,7 +51,7 @@ object ExpressionParsers {
         AST.BinaryOperation(left, op.type, right)
     }
 
-    val comparison: Parser<AST.Expression> = leftAssociative(plusMinus, Tokens.doubleEqual or Tokens.lessThan or Tokens.lessThanOrEqual or Tokens.greaterThan or Tokens.greaterThanOrEqual) { left, op, right ->
+    val comparison: Parser<AST.Expression> = leftAssociative(plusMinus, Tokens.notEqual or Tokens.doubleEqual or Tokens.lessThan or Tokens.lessThanOrEqual or Tokens.greaterThan or Tokens.greaterThanOrEqual) { left, op, right ->
         AST.BinaryOperation(left, op.type, right)
     }
 
