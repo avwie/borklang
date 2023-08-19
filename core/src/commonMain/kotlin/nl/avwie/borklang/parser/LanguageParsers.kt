@@ -6,7 +6,7 @@ import com.github.h0tk3y.betterParse.grammar.parser
 import com.github.h0tk3y.betterParse.lexer.Token
 import com.github.h0tk3y.betterParse.parser.Parser
 
-object BaseParsers {
+object ExpressionParsers {
     val number: Parser<AST.Constant.Number> = Tokens.number.use { AST.Constant.Number(text.toInt()) }
     val string: Parser<AST.Constant.String> = Tokens.string.use { AST.Constant.String(text.substring(1, text.length - 1)) }
     val boolean: Parser<AST.Constant.Boolean> = (Tokens.trueToken or Tokens.falseToken).use { AST.Constant.Boolean(text == "True") }
@@ -15,30 +15,33 @@ object BaseParsers {
     val identifier: Parser<AST.Identifier> = Tokens.identifier.use { AST.Identifier(text) }
 
     val argumentsList: Parser<List<AST.Expression>> = (
-            parser { LanguageParsers.expression } and zeroOrMore(Tokens.comma and parser { LanguageParsers.expression })
-            )
+            parser { expression } and zeroOrMore(Tokens.comma and parser { expression })
+        )
         .map { (first, rest) ->
             listOf(first) + rest.map { (_, expression) -> expression }
         }
 
     val functionCall: Parser<AST.FunctionCall> = (
             identifier and skip(Tokens.leftParenthesis) and optional(argumentsList) and skip(Tokens.rightParenthesis)
-            )
+        )
         .map { (identifier, arguments) ->
             AST.FunctionCall(identifier, arguments ?: emptyList())
         }
 
     val notTerm: Parser<AST.UnaryOperation> = (
-            Tokens.not and parser { LanguageParsers.expression }
-            ).map { (_, expression) ->
+            Tokens.not and parser { expression }
+        )
+        .map { (_, expression) ->
             AST.UnaryOperation(Tokens.not, expression)
         }
 
     val parenthesesTerm: Parser<AST.Expression> = (
-            skip(Tokens.leftParenthesis) and parser { LanguageParsers.expression } and skip(Tokens.rightParenthesis)
-            )
+            skip(Tokens.leftParenthesis) and parser { expression } and skip(Tokens.rightParenthesis)
+        )
 
-    val term: Parser<AST.Expression> = notTerm or parenthesesTerm or functionCall or constant or nil or identifier
+    val primary: Parser<AST.Expression> = parenthesesTerm or functionCall or constant or nil or identifier
+
+    val term: Parser<AST.Expression> = notTerm or primary
 
     val multiplyDivide: Parser<AST.Expression> = leftAssociative(term, Tokens.multiply or Tokens.divide or Tokens.modulo) { left, op, right ->
         AST.BinaryOperation(left, op.type, right)
@@ -59,13 +62,15 @@ object BaseParsers {
     val or: Parser<AST.Expression> = leftAssociative(and, Tokens.or) { left, op, right ->
         AST.BinaryOperation(left, op.type, right)
     }
+
+    val expression: Parser<AST.Expression> =  or
 }
 
 object LanguageParsers {
 
-    val identifier = BaseParsers.identifier
+    val identifier = ExpressionParsers.identifier
 
-    val expression: Parser<AST.Expression> =  BaseParsers.or
+    val expression = ExpressionParsers.expression
 
     val assignment: Parser<AST.Assignment> = (
             identifier and skip(Tokens.equal) and expression
