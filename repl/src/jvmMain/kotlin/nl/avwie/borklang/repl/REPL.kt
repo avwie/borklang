@@ -25,9 +25,13 @@ fun main() {
             lines.add(line)
         }
 
-        val ast = Grammar.parseToEnd(lines.joinToString("\n"))
-        val result = interpreter.evaluate(ast)
+        try {
+            val ast = Grammar.parseToEnd(lines.joinToString("\n"))
+            val result = interpreter.evaluate(ast)
+            println(result.asString().value)
+        } catch (e: Exception) {
+            println(e.message)
+        }
         lines.clear()
-        println(result)
     }
 }

@@ -29,18 +29,18 @@ sealed interface BorkValue {
         is Nil -> Number(0)
     }
 
-    fun asString(): kotlin.String = when (this) {
-        is True -> "true"
-        is False -> "false"
-        is Number -> value.toString()
-        is Boolean -> value.toString()
-        is String -> value
-        is Nil -> ""
+    fun asString(): String = when (this) {
+        is True -> String("True")
+        is False -> String("False")
+        is Number -> String(value.toString())
+        is Boolean -> String(value.toString())
+        is String -> this
+        is Nil -> String("Nil")
     }
 
     operator fun plus(other: BorkValue): BorkValue = when (this) {
         is Number -> Number(this.value + other.asNumber().value)
-        is String -> String(this.value + other.asString())
+        is String -> String(this.value + other.asString().value)
         else -> throw RuntimeException("Cannot add $this and $other")
     }
 
@@ -54,6 +54,10 @@ sealed interface BorkValue {
             is Number -> Number(this.value * other.value)
             is String -> String(other.value.repeat(this.value))
             is Boolean -> Number(this.value * other.asNumber().value)
+            else -> throw RuntimeException("Cannot multiply $this and $other")
+        }
+        is String -> when (other) {
+            is Number -> String(this.value.repeat(other.value))
             else -> throw RuntimeException("Cannot multiply $this and $other")
         }
         else -> throw RuntimeException("Cannot multiply $this and $other")
@@ -83,7 +87,7 @@ sealed interface BorkValue {
 
     operator fun compareTo(other: BorkValue): Int = when (this) {
         is Number -> this.value.compareTo(other.asNumber().value)
-        is String -> this.value.compareTo(other.asString())
+        is String -> this.value.compareTo(other.asString().value)
         else -> throw RuntimeException("Cannot compare $this and $other")
     }
 }

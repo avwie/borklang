@@ -81,7 +81,7 @@ class Scope(
 
     companion object {
         fun default(
-            stdOut: (BorkValue) -> BorkValue = { println(it); BorkValue.Nil },
+            stdOut: (BorkValue) -> BorkValue = { println(it.asString().value); BorkValue.Nil },
         ): Scope = Scope().apply {
             declareNativeFunction("print", listOf("value")) {
                 stdOut(resolveValue("value"))
