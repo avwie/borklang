@@ -15,7 +15,7 @@ class TreeWalkingInterpreterTests {
 
         val interpreter = TreeWalkingInterpreter()
         val result = interpreter.interpret(program)
-        assertEquals(3, result)
+        assertEquals(BorkValue.Number(3), result)
     }
 
     @Test
@@ -34,7 +34,7 @@ class TreeWalkingInterpreterTests {
 
         val interpreter = TreeWalkingInterpreter()
         val result = interpreter.interpret(program)
-        assertEquals(55, result)
+        assertEquals(BorkValue.Number(55), result)
     }
 
     @Test
@@ -49,6 +49,6 @@ class TreeWalkingInterpreterTests {
 
         val interpreter = TreeWalkingInterpreter()
         val result = interpreter.interpret(program)
-        assertEquals(789, result)
+        assertEquals(BorkValue.Number(789), result)
     }
 }

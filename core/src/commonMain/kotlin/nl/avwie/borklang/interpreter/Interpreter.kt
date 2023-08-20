@@ -5,9 +5,9 @@ import nl.avwie.borklang.parser.AST
 import nl.avwie.borklang.parser.Grammar
 
 interface Interpreter {
-    fun evaluate(ast: AST): Any?
+    fun evaluate(ast: AST): BorkValue
 
-    fun interpret(program: String): Any? {
+    fun interpret(program: String): BorkValue {
         val ast = Grammar.parseToEnd(program)
         return evaluate(ast)
     }
