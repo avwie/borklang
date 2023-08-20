@@ -21,7 +21,7 @@ class TreeWalkingInterpreterTests {
     @Test
     fun fibonacci() {
         val program = """
-            fn fib(n) {
+            fn fib = (n) -> {
                 if (n < 2) {
                     return n
                 } else {

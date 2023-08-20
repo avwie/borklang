@@ -15,6 +15,7 @@ object Tokens : TokenSetBuilder() {
     val rightBrace by literalToken("}")
     val leftParenthesis by literalToken("(")
     val rightParenthesis by literalToken(")")
+    val rightArrow by literalToken("->")
 
     val const by literalToken("const")
     val let by literalToken("let")

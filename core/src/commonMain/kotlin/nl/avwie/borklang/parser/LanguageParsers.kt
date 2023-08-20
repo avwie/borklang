@@ -94,9 +94,11 @@ object LanguageParsers {
     val functionDeclaration: Parser<AST.Declaration.Function> = (
             skip(Tokens.fn) and
             identifier and
+            skip(Tokens.equal) and
             skip(Tokens.leftParenthesis) and
             optional(parameterList) and
             skip(Tokens.rightParenthesis) and
+            skip(Tokens.rightArrow) and
             parser { block }
         )
         .map { (identifier, parameters, block) ->

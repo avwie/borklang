@@ -203,12 +203,12 @@ class ParserTests {
     @Test
     fun functionDeclaration() {
         val program = Grammar.parseToEnd("""
-            fn foo() {
+            fn foo = () -> {
                 const x = 123;
                 let y = 456;
             }
             
-            fn bar(x, y) {
+            fn bar = (x, y) -> {
                 const z = 789;
             }
         """.trimIndent())
@@ -287,7 +287,7 @@ class ParserTests {
     @Test
     fun fibonacci() {
         val program = Grammar.parseToEnd("""
-            fn fib(n) {
+            fn fib = (n) -> {
                 if (n < 2) {
                     return n
                 } else {
@@ -326,7 +326,7 @@ class ParserTests {
     @Test
     fun blockInFunctionCall() {
         val program = Grammar.parseToEnd("""
-            fn add(x, y) {
+            fn add = (x, y) -> {
                 return x + y
             }
             
@@ -346,7 +346,7 @@ class ParserTests {
     @Test
     fun serialization() {
         val program = Grammar.parseToEnd("""
-            fn fib(n) {
+            fn fib = (n) -> {
                 if (n < 2) {
                     return n
                 } else {
