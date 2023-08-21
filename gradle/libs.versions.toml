@@ -2,11 +2,13 @@
 # Jetbrains
 jetbrains-kotlin = "1.9.0"
 jetbrains-serialization-json = "1.5.1"
+jetbrains-html = "0.9.1"
 betterParse = "0.4.4"
 
 [libraries]
 # Jetbrains
 jetbrains-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "jetbrains-serialization-json" }
+jetbrains-html = { module = "org.jetbrains.kotlinx:kotlinx-html-js", version.ref = "jetbrains-html" }
 
 # Others
 betterParse = { module = "com.github.h0tk3y.betterParse:better-parse", version.ref = "betterParse" }

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Bork Lang Online Interpreter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Fira+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Bork Lang Online Interpreter</h1>
+    <div class="main">
+        <form class="pure-form">
+            <h2>Input</h2>
+            <textarea id="input" class="code pure-input" cols="80" rows="20"></textarea>
+            <div class="controls">
+                <button id="run" class="pure-button pure-button-primary">Run</button>
+                <button id="reset_run" class="pure-button pure-button">Reset & Run</button>
+                <button id="clear" class="pure-button">Clear</button>
+                <button id="reset" class="pure-button">Reset</button>
+            </div>
+            <h2>Output</h2>
+            <textarea id="output" class="code pure-input" cols="80" rows="10" readonly></textarea>
+        </form>
+        <form class="pure-form">
+            <h2>AST</h2>
+            <textarea id="ast" class="code pure-input" cols="80" rows="20" readonly></textarea>
+        </form>
+    </div>
+    <script type="application/javascript" src="web.js"></script>
+</body>
+</html>

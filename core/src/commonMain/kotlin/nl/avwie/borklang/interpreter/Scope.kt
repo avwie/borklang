@@ -58,6 +58,7 @@ class Scope(
 
     fun setVariable(name: String, value: BorkValue) {
         when  {
+            constants.containsKey(name) -> throw IllegalStateException("Cannot set constant $name")
             variables.containsKey(name) -> variables[name] = value
             parent != null -> parent.setVariable(name, value)
             else -> throw IllegalStateException("Variable $name is not declared")

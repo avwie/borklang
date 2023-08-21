@@ -13,5 +13,6 @@ pluginManagement {
 
 include(
     ":core",
-    ":repl"
+    ":repl",
+    ":web"
 )

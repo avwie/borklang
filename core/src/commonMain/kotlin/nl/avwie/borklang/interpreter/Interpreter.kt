@@ -7,6 +7,8 @@ import nl.avwie.borklang.parser.Grammar
 interface Interpreter {
     fun evaluate(ast: AST): BorkValue
 
+    fun reset(scope: Scope? = null)
+
     fun interpret(program: String): BorkValue {
         val ast = Grammar.parseToEnd(program)
         return evaluate(ast)

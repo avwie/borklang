@@ -109,7 +109,7 @@ object LanguageParsers {
 
     val block: Parser<AST.Block> = (
             skip(Tokens.leftBrace) and
-            oneOrMore(parser { statement }) and
+            zeroOrMore(parser { statement }) and
             skip(Tokens.rightBrace)
         )
         .map { statements ->  AST.Block(statements) }

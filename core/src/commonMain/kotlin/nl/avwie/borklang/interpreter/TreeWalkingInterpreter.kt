@@ -7,11 +7,17 @@ class TreeWalkingInterpreter(
     scope: Scope = Scope()
 ) : Interpreter {
 
+
     private val scopes = ArrayDeque<Scope>().also { it.add(scope) }
     private val scope get() = scopes.last()
     override fun evaluate(ast: AST): BorkValue = when (ast) {
         is AST.Program -> program(ast)
         is AST.Statement -> statement(ast)
+    }
+
+    override fun reset(scope: Scope?) {
+        scopes.clear()
+        scopes.add(scope ?: Scope())
     }
 
     private fun program(program: AST.Program): BorkValue {
