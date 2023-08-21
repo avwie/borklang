@@ -2,3 +2,4 @@
 build
 .idea/artifacts
 .idea/workspace.xml
+.DS_Store
