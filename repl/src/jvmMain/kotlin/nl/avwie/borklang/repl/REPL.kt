@@ -1,26 +1,37 @@
 package nl.avwie.borklang.repl
 
-import nl.avwie.borklang.interpreter.treewalking.Scope
-import nl.avwie.borklang.interpreter.treewalking.TreeWalkingInterpreter
-import nl.avwie.borklang.parser.Parser
-import nl.avwie.borklang.parser.parse
+import com.github.h0tk3y.betterParse.grammar.parseToEnd
+import nl.avwie.borklang.interpreter.Scope
+import nl.avwie.borklang.interpreter.TreeWalkingInterpreter
+import nl.avwie.borklang.parser.Grammar
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 fun main() {
     val input = InputStreamReader(System.`in`);
     val reader = BufferedReader(input);
-    val scope = Scope.default(
-        stdOut = { println(it) },
-    )
+    val scope = Scope.default()
     val interpreter = TreeWalkingInterpreter(scope)
-    val parser = Parser.instance()
 
+    val lines = mutableListOf<String>()
     while (true) {
-        print("> ")
+        if (lines.isEmpty()) print("> ")
+        else print("  ")
         val line = reader.readLine() ?: break
-        val ast = parser.parse(line)
-        val result = interpreter.evaluate(ast)
-        println(result)
+        if (line.endsWith('\\')) {
+            lines.add(line.substring(0, line.length - 1))
+            continue
+        } else {
+            lines.add(line)
+        }
+
+        try {
+            val ast = Grammar.parseToEnd(lines.joinToString("\n"))
+            val result = interpreter.evaluate(ast)
+            println(result.asString().value)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        lines.clear()
     }
 }

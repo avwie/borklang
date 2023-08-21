@@ -8,14 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/common" />
-            <option value="$PROJECT_DIR$/compiler" />
-            <option value="$PROJECT_DIR$/interpreter" />
-            <option value="$PROJECT_DIR$/lexer" />
-            <option value="$PROJECT_DIR$/parser" />
+            <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/repl" />
-            <option value="$PROJECT_DIR$/samples" />
-            <option value="$PROJECT_DIR$/vm" />
+            <option value="$PROJECT_DIR$/web" />
           </set>
         </option>
       </GradleProjectSettings>

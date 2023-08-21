@@ -1,17 +1,20 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
 }
 
 kotlin {
-    jvm()
     js(IR) {
         browser()
     }
 
+    jvm()
+
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.common)
+                api(libs.betterParse)
+                api(libs.jetbrains.serialization.json)
             }
         }
 

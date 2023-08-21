@@ -1,0 +1,22 @@
+body {
+    margin: 1em;
+    font-family: 'Fira Sans', sans-serif
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.code {
+    font-family: 'Fira Code', monospace;
+}
+
+.controls {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: flex-start;
+}
