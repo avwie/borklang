@@ -1,14 +1,23 @@
 package nl.avwie.borklang.parser
 
+import com.github.h0tk3y.betterParse.lexer.Language
 import com.github.h0tk3y.betterParse.lexer.Token
 import com.github.h0tk3y.betterParse.lexer.literalToken
-import com.github.h0tk3y.betterParse.lexer.regexToken
 import kotlin.reflect.KProperty
+
+internal class RegexToken(name: String?, private val pattern: Regex, ignored: Boolean = false) : Token(name = name, ignored = ignored) {
+
+    constructor(name: String?, pattern: String, ignored: Boolean = false): this(name, pattern.toRegex(), ignored)
+    override fun match(input: CharSequence, fromIndex: Int): Int {
+        val result = this.pattern.matchAt(input, fromIndex)
+        return result?.range?.count() ?: 0
+    }
+}
+internal fun regexToken(@Language("RegExp", "", "") pattern: String, ignore: Boolean = false): RegexToken =
+    RegexToken(null, pattern, ignore)
 
 object Tokens : TokenSetBuilder() {
 
-    val whitespace by regexToken("\\s+", ignore = true)
-    val newline by regexToken("[\r\n]+", ignore = true)
     val semicolon by literalToken(";")
     val comma by literalToken(",")
     val leftBrace by literalToken("{")
@@ -30,7 +39,6 @@ object Tokens : TokenSetBuilder() {
 
     val number by regexToken("-?\\d+")
     val string by regexToken("\"[^\"]*\"")
-    val identifier by regexToken("[a-zA-Z_][a-zA-Z0-9_]*")
 
     val plus by literalToken("+")
     val minus by literalToken("-")
@@ -50,6 +58,10 @@ object Tokens : TokenSetBuilder() {
     val greaterThanOrEqual by literalToken(">=")
 
     val not by literalToken("!")
+
+    val whitespace by literalToken(" ", ignore = true)
+    val newline by literalToken("\\n", ignore = true)
+    val identifier by regexToken("[a-zA-Z_][a-zA-Z0-9_]*")
 }
 
 abstract class TokenSetBuilder(
