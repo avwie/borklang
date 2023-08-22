@@ -15,5 +15,4 @@ include(
     ":core",
     ":repl",
     ":web",
-    ":node"
 )

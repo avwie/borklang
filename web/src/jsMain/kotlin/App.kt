@@ -59,12 +59,12 @@ fun main() {
 }
 
 fun run(code: String, interpreter: Interpreter): Pair<String, String> {
-    try {
+    return try {
         val ast = Grammar.parseToEnd(code)
         val serialized = serializer.encodeToString(ast)
         val result = interpreter.evaluate(ast)
-        return result.toString() to serialized
+        result.toString() to serialized
     } catch (e: Exception) {
-        return (e.message ?: "Unknown error") to ""
+        (e.message ?: "Unknown error") to ""
     }
 }
