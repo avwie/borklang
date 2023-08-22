@@ -18,6 +18,9 @@ internal fun regexToken(@Language("RegExp", "", "") pattern: String, ignore: Boo
 
 object Tokens : TokenSetBuilder() {
 
+    val whitespace by regexToken("\\s+", ignore = true)
+    val newline by regexToken("[\r\n]+", ignore = true)
+
     val semicolon by literalToken(";")
     val comma by literalToken(",")
     val leftBrace by literalToken("{")
@@ -58,9 +61,6 @@ object Tokens : TokenSetBuilder() {
     val greaterThanOrEqual by literalToken(">=")
 
     val not by literalToken("!")
-
-    val whitespace by literalToken(" ", ignore = true)
-    val newline by literalToken("\\n", ignore = true)
     val identifier by regexToken("[a-zA-Z_][a-zA-Z0-9_]*")
 }
 
