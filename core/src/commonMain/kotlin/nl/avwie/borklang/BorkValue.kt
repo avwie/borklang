@@ -1,9 +1,15 @@
-package nl.avwie.borklang.interpreter
+package nl.avwie.borklang
 
 sealed interface BorkValue {
+    val type: BorkType
+        get() = when (this) {
+            is Number -> BorkType.Number
+            is Boolean -> BorkType.Boolean
+            is String -> BorkType.String
+            is Nil -> BorkType.Nil
+        }
+
     data object Nil : BorkValue
-    data object True : BorkValue
-    data object False : BorkValue
 
     data class Number(val value: Int) : BorkValue
 
@@ -12,8 +18,6 @@ sealed interface BorkValue {
     data class String(val value: kotlin.String) : BorkValue
 
     fun asBoolean(): Boolean = when (this) {
-        is True -> true
-        is False -> false
         is Number -> value != 0
         is Boolean -> value
         is String -> value.isNotEmpty()
@@ -21,8 +25,6 @@ sealed interface BorkValue {
     }.let { Boolean(it) }
 
     fun asNumber(): Number = when (this) {
-        is True -> Number(1)
-        is False -> Number(0)
         is Number -> this
         is Boolean -> Number(if (value) 1 else 0)
         is String -> Number(value.length)
@@ -30,8 +32,6 @@ sealed interface BorkValue {
     }
 
     fun asString(): String = when (this) {
-        is True -> String("True")
-        is False -> String("False")
         is Number -> String(value.toString())
         is Boolean -> String(value.toString())
         is String -> this
