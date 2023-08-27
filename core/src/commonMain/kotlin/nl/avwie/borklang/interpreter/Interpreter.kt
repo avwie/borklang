@@ -11,7 +11,7 @@ interface Interpreter {
     fun reset(scope: Scope? = null)
 
     fun interpret(program: String): BorkValue {
-        val ast = Grammar.parseToEnd(program)
+        val ast = Grammar.parseToEnd(program).asProgram()
         return evaluate(ast)
     }
 }

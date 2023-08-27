@@ -5,6 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed interface AST {
+
+    fun asProgram(): Program = when (this) {
+        is Program -> this
+        is Statement -> Program(listOf(this))
+    }
+
     @Serializable
     @SerialName("statement")
     sealed interface Statement : AST

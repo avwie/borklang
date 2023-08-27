@@ -5,7 +5,7 @@ import nl.avwie.borklang.parser.AST
 import nl.avwie.borklang.parser.Tokens
 
 class TreeWalkingInterpreter(
-    scope: Scope = ScopeImpl()
+    scope: Scope = Scope()
 ) : Interpreter {
 
     class ReturnException(val value: BorkValue) : RuntimeException()
@@ -19,13 +19,17 @@ class TreeWalkingInterpreter(
 
     override fun reset(scope: Scope?) {
         scopes.clear()
-        scopes.add(scope ?: ScopeImpl())
+        scopes.add(scope ?: Scope())
     }
 
     private fun program(program: AST.Program): BorkValue {
         var result: BorkValue = BorkValue.Nil
-        program.statements.forEach { statement ->
-            result = statement(statement)
+        try {
+            program.statements.forEach { statement ->
+                result = statement(statement)
+            }
+        } catch (e: ReturnException) {
+            result = e.value
         }
         return result
     }
