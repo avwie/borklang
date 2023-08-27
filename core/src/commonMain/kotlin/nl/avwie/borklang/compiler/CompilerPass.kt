@@ -1,4 +1,5 @@
 package nl.avwie.borklang.compiler
 
-interface CompilerPass {
+interface CompilerPass<I, O> {
+    fun compile(input: I): O
 }

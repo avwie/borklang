@@ -1,5 +1,6 @@
 package nl.avwie.borklang.interpreter
 
+import nl.avwie.borklang.BorkValue
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -50,5 +51,24 @@ class TreeWalkingInterpreterTests {
         val interpreter = TreeWalkingInterpreter()
         val result = interpreter.interpret(program)
         assertEquals(BorkValue.Number(789), result)
+    }
+
+    @Test
+    fun earlyBreak2() {
+        val program = """
+            fn foo = (n) -> {
+                if (n < 2) {
+                    return n
+                }
+                return 123
+                "hello"
+            }
+            
+            foo(1)            
+        """.trimIndent()
+
+        val interpreter = TreeWalkingInterpreter()
+        val result = interpreter.interpret(program)
+        assertEquals(BorkValue.Number(1), result)
     }
 }

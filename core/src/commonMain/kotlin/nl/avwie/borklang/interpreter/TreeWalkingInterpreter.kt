@@ -1,12 +1,14 @@
 package nl.avwie.borklang.interpreter
 
+import nl.avwie.borklang.BorkValue
 import nl.avwie.borklang.parser.AST
 import nl.avwie.borklang.parser.Tokens
 
 class TreeWalkingInterpreter(
-    scope: Scope = Scope()
+    scope: Scope = ScopeImpl()
 ) : Interpreter {
 
+    class ReturnException(val value: BorkValue) : RuntimeException()
 
     private val scopes = ArrayDeque<Scope>().also { it.add(scope) }
     private val scope get() = scopes.last()
@@ -17,7 +19,7 @@ class TreeWalkingInterpreter(
 
     override fun reset(scope: Scope?) {
         scopes.clear()
-        scopes.add(scope ?: Scope())
+        scopes.add(scope ?: ScopeImpl())
     }
 
     private fun program(program: AST.Program): BorkValue {
@@ -89,7 +91,7 @@ class TreeWalkingInterpreter(
     }
 
     private fun returnStatement(returnStatement: AST.Control.Return): BorkValue {
-        return expression(returnStatement.expression)
+        throw ReturnException(expression(returnStatement.expression))
     }
 
     private fun constant(constant: AST.Constant): BorkValue = when (constant) {
@@ -98,17 +100,12 @@ class TreeWalkingInterpreter(
         is AST.Constant.String -> BorkValue.String(constant.value)
     }
 
-    private fun block(block: AST.Block): BorkValue {
-       return  scoped {
-           var result: BorkValue = BorkValue.Nil
-           block.statements.forEach { statement ->
-               result = statement(statement)
-               if (statement is AST.Control.Return) {
-                   return@scoped result
-               }
-           }
-           result
+    private fun block(block: AST.Block): BorkValue = scoped {
+        var result: BorkValue = BorkValue.Nil
+        block.statements.forEach { statement ->
+            result = statement(statement)
         }
+        result
     }
 
     private fun unaryOperation(unaryOperation: AST.UnaryOperation): BorkValue {
@@ -149,7 +146,6 @@ class TreeWalkingInterpreter(
         val function = scope.resolveFunction(functionCall.identifier.name)
         val arguments = functionCall.arguments.map { expression(it) }
         return scoped {
-
             function.parameters.zip(arguments).forEach { (parameter, argument) ->
                 scope.declareVariable(parameter, argument)
             }
@@ -157,8 +153,11 @@ class TreeWalkingInterpreter(
             when (function) {
                 is Scope.Function.Native -> function.block.invoke(scope)
                 is Scope.Function.UserDefined -> {
-                    val result = expression(function.body)
-                    result
+                    try {
+                        expression(function.body)
+                    } catch (e: ReturnException) {
+                        e.value
+                    }
                 }
             }
         }
@@ -166,8 +165,13 @@ class TreeWalkingInterpreter(
 
     private fun scoped(block: () -> BorkValue): BorkValue {
         scopes.add(scope.child())
-        val result = block()
-        scopes.removeLast()
-        return result
+        try {
+            val result = block()
+            scopes.removeLast()
+            return result
+        } catch (e: ReturnException) {
+            scopes.removeLast()
+            throw e
+        }
     }
 }
